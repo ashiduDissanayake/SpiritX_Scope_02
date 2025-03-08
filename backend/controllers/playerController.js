@@ -58,6 +58,15 @@ exports.createPlayer = async (req, res) => {
       [name, university, category, total_runs || 0, balls_faced || 0, innings_played || 0,
        wickets || 0, overs_bowled || 0, runs_conceded || 0]
     );
+    // Fetch the newly created player to get full stats
+    const [newPlayers] = await db.execute(
+      'SELECT * FROM players WHERE id = ?',
+      [result.insertId]
+    );
+    const newPlayer = calculations.getPlayerFullStats(newPlayers[0]);
+
+    // Emit WebSocket event for player creation
+    req.io.emit('playerCreated', newPlayer);
     
     res.status(201).json({ 
       message: 'Player created successfully', 
@@ -132,6 +141,8 @@ exports.deletePlayer = async (req, res) => {
     
     // Delete player
     await db.execute('DELETE FROM players WHERE id = ?', [playerId]);
+    // Emit WebSocket event for player deletion
+    req.io.emit('playerDeleted', { id: playerId });
     
     res.json({ message: 'Player deleted successfully' });
   } catch (error) {

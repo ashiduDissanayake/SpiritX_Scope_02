@@ -84,6 +84,18 @@ export default function SelectTeamPage() {
       );
     });
 
+    socket.on("playerCreated", (newPlayer) => {
+      console.log("Player created:", newPlayer);
+      setPlayers((prevPlayers) => [...prevPlayers, newPlayer]);
+    });
+
+    socket.on("playerDeleted", (deletedPlayer) => {
+      console.log("Player deleted:", deletedPlayer);
+      setPlayers((prevPlayers) =>
+        prevPlayers.filter((player) => player.id !== deletedPlayer.id)
+      );
+    });
+
     // Cleanup
     return () => {
       socket.disconnect();
