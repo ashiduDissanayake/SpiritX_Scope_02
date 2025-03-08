@@ -1,0 +1,615 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/user/TeamDisplay.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+.TeamDisplay_teamDisplay__h2mhf {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+  .TeamDisplay_teamDisplay__h2mhf h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1.25rem 0;
+    color: #333333;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 0.75rem;
+  }
+  
+  .TeamDisplay_emptyTeam__5I1dg {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1.5rem;
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .TeamDisplay_emptyTeam__5I1dg p {
+    color: #6c757d;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  
+  .TeamDisplay_categorySection__Nu6FZ {
+    margin-bottom: 2rem;
+  }
+  
+  .TeamDisplay_categorySection__Nu6FZ h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #495057;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .TeamDisplay_playersList__OVSek {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 1rem;
+    gap: 1rem;
+  }
+  
+  .TeamDisplay_playerCard__7GD7E {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-left: 4px solid #5c7cfa;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .TeamDisplay_playerCard__7GD7E:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+  
+  .TeamDisplay_playerInfo__pVLF6 {
+    flex-grow: 1;
+  }
+  
+  .TeamDisplay_playerInfo__pVLF6 h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+    color: #333333;
+  }
+  
+  .TeamDisplay_university___10uO {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .TeamDisplay_value__XMI0C {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #495057;
+    margin: 0;
+  }
+  
+  .TeamDisplay_removeButton__UXxVp {
+    background-color: #fff;
+    color: #e03131;
+    border: 1px solid #ffe3e3;
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+  
+  .TeamDisplay_removeButton__UXxVp:hover {
+    background-color: #ffe3e3;
+    color: #c92a2a;
+  }
+  
+  .TeamDisplay_noCategoryPlayers__K3KcT {
+    color: #6c757d;
+    font-size: 0.95rem;
+    font-style: italic;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 6px;
+    text-align: center;
+    margin: 0;
+  }
+  
+  .TeamDisplay_teamPoints__948RK {
+    margin-top: 2rem;
+    background-color: #edf2ff;
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  
+  .TeamDisplay_teamPoints__948RK h3 {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #495057;
+    margin: 0 0 0.5rem 0;
+  }
+  
+  .TeamDisplay_pointsValue__SYnks {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #5c7cfa;
+  }
+  
+  @media (max-width: 768px) {
+    .TeamDisplay_playersList__OVSek {
+      grid-template-columns: 1fr;
+    }
+    
+    .TeamDisplay_teamDisplay__h2mhf {
+      padding: 1.25rem;
+    }
+  }
+/*!************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/user/BudgetTracker.module.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************/
+.BudgetTracker_container__lp4iA {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .BudgetTracker_header__iJgn8 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1.2rem;
+    text-align: center;
+  }
+  
+  .BudgetTracker_infoContainer__GH2u_ {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .BudgetTracker_infoItem__RDId8 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .BudgetTracker_infoLabel__TYipX {
+    font-size: 0.875rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+  }
+  
+  .BudgetTracker_infoValue__W80b9 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .BudgetTracker_progressContainer__OHVDF {
+    width: 100%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+  }
+  
+  .BudgetTracker_progressBar__kKsoG {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    border-radius: 5px;
+    transition: width 0.3s ease;
+  }
+  
+  .BudgetTracker_progressLabel__2DrTp {
+    text-align: right;
+    font-size: 0.875rem;
+    color: #666;
+    font-weight: 500;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .BudgetTracker_infoContainer__GH2u_ {
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .BudgetTracker_infoItem__RDId8 {
+      width: 100%;
+    }
+  }
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/user/TeamCompletenessIndicator.module.css ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+.TeamCompletenessIndicator_completenessIndicator__Euh5Z {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+  }
+  
+  .TeamCompletenessIndicator_completenessIndicator__Euh5Z h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+    color: #333333;
+  }
+  
+  .TeamCompletenessIndicator_progressContainer__t7zFA {
+    height: 12px;
+    background-color: #e9ecef;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  
+  .TeamCompletenessIndicator_progressBar__XhxDk {
+    height: 100%;
+    background: linear-gradient(90deg, #5c7cfa, #339af0);
+    border-radius: 6px;
+    transition: width 0.4s ease-in-out;
+  }
+  
+  .TeamCompletenessIndicator_statusInfo__VI41b {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .TeamCompletenessIndicator_playerCount__pfT6w {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #495057;
+  }
+  
+  .TeamCompletenessIndicator_status__NonuD {
+    font-size: 0.875rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 99px;
+  }
+  
+  .TeamCompletenessIndicator_incomplete__TYQ5W {
+    background-color: #ffe3e3;
+    color: #e03131;
+  }
+  
+  .TeamCompletenessIndicator_almostComplete__COdQ9 {
+    background-color: #fff3bf;
+    color: #f08c00;
+  }
+  
+  .TeamCompletenessIndicator_complete__NyBPx {
+    background-color: #d3f9d8;
+    color: #2b8a3e;
+  }
+  
+  @media (max-width: 768px) {
+    .TeamCompletenessIndicator_completenessIndicator__Euh5Z {
+      padding: 1.25rem;
+    }
+    
+    .TeamCompletenessIndicator_statusInfo__VI41b {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/chatbot/Spiriter.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+.Spiriter_chatbotToggle__nze5y {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+  
+  .Spiriter_chatbotToggle__nze5y:hover {
+    background-color: #1a252f;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  }
+  
+  .Spiriter_chatbotContainer__Roi6b {
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    width: 350px;
+    height: 500px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 1000;
+  }
+  
+  .Spiriter_chatbotHeader__iIlp5 {
+    background-color: #2c3e50;
+    color: white;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+  
+  .Spiriter_chatbotHeader__iIlp5 h3 {
+    margin: 0;
+    font-size: 1rem;
+  }
+  
+  .Spiriter_closeButton__hmZQE {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 5px;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  
+  .Spiriter_closeButton__hmZQE:hover {
+    opacity: 1;
+  }
+  
+  .Spiriter_messagesContainer__a6kFa {
+    flex: 1 1;
+    padding: 15px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  .Spiriter_message__ge_UK {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    margin-bottom: 5px;
+    word-wrap: break-word;
+    line-height: 1.4;
+  }
+  
+  .Spiriter_user__s7AWp {
+    align-self: flex-end;
+    background-color: #3498db;
+    color: white;
+    border-bottom-right-radius: 5px;
+  }
+  
+  .Spiriter_bot__Z2rHC {
+    align-self: flex-start;
+    background-color: #e9ecef;
+    color: #212529;
+    border-bottom-left-radius: 5px;
+  }
+  
+  .Spiriter_inputContainer__2tMnL {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #e9ecef;
+  }
+  
+  .Spiriter_inputContainer__2tMnL input {
+    flex: 1 1;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+    border-radius: 20px;
+    outline: none;
+    margin-right: 10px;
+    font-size: 14px;
+  }
+  
+  .Spiriter_inputContainer__2tMnL input:focus {
+    border-color: #3498db;
+  }
+  
+  .Spiriter_inputContainer__2tMnL button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 0 20px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.2s;
+  }
+  
+  .Spiriter_inputContainer__2tMnL button:hover {
+    background-color: #2980b9;
+  }
+  
+  .Spiriter_inputContainer__2tMnL button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+  }
+  
+  .Spiriter_typingIndicator__g_ONi {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 0;
+  }
+  
+  .Spiriter_typingIndicator__g_ONi span {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background-color: #bdc3c7;
+    border-radius: 50%;
+    animation: Spiriter_typing__9atpD 1.4s infinite ease-in-out both;
+  }
+  
+  .Spiriter_typingIndicator__g_ONi span:nth-child(1) {
+    animation-delay: 0s;
+  }
+  
+  .Spiriter_typingIndicator__g_ONi span:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  
+  .Spiriter_typingIndicator__g_ONi span:nth-child(3) {
+    animation-delay: 0.4s;
+  }
+  
+  .Spiriter_authMessage__utwPQ {
+    text-align: center;
+    padding: 10px;
+    background-color: #fff3cd;
+    color: #856404;
+    font-size: 14px;
+    border-top: 1px solid #ffeeba;
+  }
+  
+  /* Animation for typing indicator */
+  @keyframes Spiriter_typing__9atpD {
+    0%, 80%, 100% { transform: scale(0.6); }
+    40% { transform: scale(1); }
+  }
+  
+  /* Media query for mobile responsiveness */
+  @media (max-width: 480px) {
+    .Spiriter_chatbotContainer__Roi6b {
+      bottom: 70px;
+      right: 10px;
+      width: calc(100% - 20px);
+      height: 60vh;
+    }
+    
+    .Spiriter_chatbotToggle__nze5y {
+      bottom: 10px;
+      right: 10px;
+      padding: 10px 16px;
+    }
+  }
+/*!***********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./app/my-team/page.module.css ***!
+  \***********************************************************************************************************************************************************************************************************************************************************************/
+.page_myTeamPage__Jz7dc {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  
+  .page_myTeamPage__Jz7dc h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+  .page_restrictedMessage__OZY1D {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
+    color: #721c24;
+    background-color: #f8d7da;
+    text-align: center;
+    padding: 20px;
+  }
+  .page_loading__iMNY8 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .page_teamContainer__kwDfa {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .page_statsContainer___Dzbf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-gap: 1.5rem;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .page_actionContainer__2Uvs7 {
+    background-color: #fff3bf;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+  }
+  
+  .page_actionContainer__2Uvs7 p {
+    font-size: 1rem;
+    color: #856404;
+    margin-bottom: 1rem;
+  }
+  
+  .page_selectMoreButton__LZObl {
+    display: inline-block;
+    background-color: #5c7cfa;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .page_selectMoreButton__LZObl:hover {
+    background-color: #4263eb;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .page_myTeamPage__Jz7dc {
+      padding: 1.5rem 1rem;
+    }
+    
+    .page_myTeamPage__Jz7dc h1 {
+      font-size: 1.75rem;
+    }
+    
+    .page_statsContainer___Dzbf {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .page_myTeamPage__Jz7dc h1 {
+      font-size: 1.5rem;
+    }
+    
+    .page_actionContainer__2Uvs7 {
+      padding: 1.25rem;
+    }
+  }

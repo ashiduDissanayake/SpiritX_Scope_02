@@ -19,7 +19,10 @@ export default function Header() {
   };
   
   const isActive = (path) => {
-    return pathname === path || pathname.startsWith(`${path}/`);
+    if (path === "/admin") {
+      return pathname === path; // Exact match for Dashboard
+    }
+    return pathname === path || pathname.startsWith(`${path}/`); // Subpath match for others
   };
   
   return (

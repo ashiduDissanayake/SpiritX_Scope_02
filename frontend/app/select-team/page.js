@@ -9,7 +9,6 @@ import { useAuth } from "@/context/AuthContext";
 import { useTeam } from "@/context/TeamContext";
 import { useRouter } from "next/navigation";
 import io from "socket.io-client";
-
 import styles from "./page.module.css";
 
 export default function SelectTeamPage() {
@@ -23,15 +22,12 @@ export default function SelectTeamPage() {
   const router = useRouter();
 
   useEffect(() => {
-    // Handle authentication check and restricted message
     if (!authLoading && !isAuthenticated) {
       setShowRestrictedMessage(true);
       const timer = setTimeout(() => {
         setShowRestrictedMessage(false);
         router.push("/login");
-      }, 2000); // 2 seconds delay
-
-      // Cleanup timer on component unmount or if dependencies change
+      }, 2000);
       return () => clearTimeout(timer);
     }
   }, [isAuthenticated, authLoading, router]);
@@ -39,7 +35,6 @@ export default function SelectTeamPage() {
   useEffect(() => {
     if (!isAuthenticated) return;
 
-    // Connect to WebSocket server on port 3001
     const socket = io("http://localhost:3001", {
       cors: {
         origin: "http://localhost:3000",
@@ -66,7 +61,6 @@ export default function SelectTeamPage() {
 
     fetchPlayers();
 
-    // Debug WebSocket connection
     socket.on("connect", () => {
       console.log("Connected to WebSocket server");
     });
@@ -74,7 +68,6 @@ export default function SelectTeamPage() {
       console.error("WebSocket connection error:", error);
     });
 
-    // Listen for real-time updates
     socket.on("playerUpdated", (updatedPlayer) => {
       console.log("Player updated:", updatedPlayer);
       setPlayers((prevPlayers) =>
@@ -96,13 +89,11 @@ export default function SelectTeamPage() {
       );
     });
 
-    // Cleanup
     return () => {
       socket.disconnect();
     };
   }, [isAuthenticated]);
 
-  // Filter players by category and search term
   const filteredPlayers = players.filter((player) => {
     const categoryMatch =
       selectedCategory === "All" || player.category === selectedCategory;
@@ -111,6 +102,7 @@ export default function SelectTeamPage() {
       player.university.toLowerCase().includes(searchTerm.toLowerCase());
     return categoryMatch && searchMatch;
   });
+
   if (showRestrictedMessage) {
     return (
       <div className={styles.restrictedMessage}>
@@ -124,7 +116,7 @@ export default function SelectTeamPage() {
   }
 
   if (!isAuthenticated) {
-    return null; // Will redirect in useEffect
+    return null;
   }
 
   return (
@@ -144,6 +136,7 @@ export default function SelectTeamPage() {
               placeholder="Search players..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className={styles.searchInput} // Added for consistent styling
             />
           </div>
 

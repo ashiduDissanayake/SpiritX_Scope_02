@@ -507,3 +507,86 @@
     text-align: center;
     padding: 20px;
   }
+  .page_selectTeamPage__8YdW6 {
+    padding: 2rem;
+  }
+  
+  .page_teamManagement__hDxg2 {
+    margin-top: 1.5rem;
+  }
+  
+  .page_statsContainer__69JBA {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .page_filters__X3SHd {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .page_searchBar__AMx16 {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .page_searchInput__AnX8h {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+  }
+  
+  .page_categoryFilter__Tby8Y {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .page_categoryFilter__Tby8Y button {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .page_categoryFilter__Tby8Y button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .page_activeFilter___u213 {
+    background-color: var(--primary-color, #2c62e8);
+    color: white;
+    border-color: var(--primary-color, #2c62e8);
+  }
+  
+  
+  .page_playersList__QtTfV {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 1rem;
+    gap: 1rem;
+  }
+  
+  .page_noPlayers__3irom {
+    text-align: center;
+    color: #666;
+    padding: 1rem;
+  }
+  
+  .page_loading___Sox1 {
+    text-align: center;
+    padding: 2rem;
+  }
+  
+  .page_restrictedMessage__lsAOc {
+    text-align: center;
+    padding: 2rem;
+    color: #ff0000;
+  }
