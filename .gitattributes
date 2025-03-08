@@ -1,2 +1,82 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Explicitly declare text files we want to always normalize
+*.html text
+*.css text
+*.js text
+*.json text
+*.md text
+*.yml text
+*.yaml text
+*.xml text
+*.toml text
+*.csv text
+*.txt text
+*.sh text
+*.bat text
+*.ps1 text
+*.psm1 text
+*.psd text
+*.ps1xml text
+*.pssc text
+*.psd1 text
+*.psm1 text
+*.ps1xml text
+*.pssc text
+*.psd1 text
+*.psm1 text
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.svg binary
+*.woff binary
+*.woff2 binary
+*.eot binary
+*.ttf binary
+*.otf binary
+
+# Ignore the build directory
+/build/* export-ignore
+
+# Ignore the .git directory
+/.git/* export-ignore
+
+# Ignore the .DS_Store file (macOS)
+.DS_Store export-ignore
+
+# Ignore the Thumbs.db file (Windows)
+Thumbs.db export-ignore
+
+# Ignore the desktop.ini file (Windows)
+desktop.ini export-ignore
+
+# Ignore the .idea directory (JetBrains IDEs)
+.idea/* export-ignore
+
+# Ignore the .vscode directory (Visual Studio Code)
+.vscode/* export-ignore
+
+# Ignore the node_modules directory (Node.js projects)
+node_modules/* export-ignore
+
+# Ignore the .env file (environment variables)
+.env export-ignore
+# Ignore the .env.local file (local environment variables)
+.env.local export-ignore
+# Ignore the .env.development file (development environment variables)
+.env.development export-ignore
+# Ignore the .env.production file (production environment variables)
+.env.production export-ignore
+# Ignore the .env.test file (test environment variables)
+.env.test export-ignore
+# Ignore the .env.example file (example environment variables)
+.env.example export-ignore
+# Ignore the .env.sample file (sample environment variables)
+.env.sample export-ignore
+
+

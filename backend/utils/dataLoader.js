@@ -1,14 +1,11 @@
 const fs = require('fs');
 const csv = require('csv-parser');
-const mysql = require('mysql2/promise');
-const dbConfig = require('../config/db');
+const db = require('../config/db'); // Use the same connection pool from config
 
 async function loadPlayerData() {
-  const connection = await mysql.createConnection(dbConfig);
-  
   try {
     // Check if players table already has data
-    const [rows] = await connection.execute('SELECT COUNT(*) as count FROM players');
+    const [rows] = await db.execute('SELECT COUNT(*) as count FROM players');
     
     if (rows[0].count > 0) {
       console.log('Players data already exists in the database');
@@ -35,20 +32,20 @@ async function loadPlayerData() {
       })
       .on('end', async () => {
         // Insert players into database
-        const query = `
-          INSERT INTO players 
-          (name, university, category, total_runs, balls_faced, innings_played, 
-           wickets, overs_bowled, runs_conceded)
-          VALUES ?
-        `;
-        
-        await connection.query(query, [players]);
-        console.log('Player data imported successfully');
+        if (players.length > 0) {
+          const query = `
+            INSERT INTO players 
+            (name, university, category, total_runs, balls_faced, innings_played, 
+             wickets, overs_bowled, runs_conceded)
+            VALUES ?
+          `;
+          
+          await db.query(query, [players]);
+          console.log('Player data imported successfully');
+        }
       });
   } catch (error) {
     console.error('Error importing player data:', error);
-  } finally {
-    await connection.end();
   }
 }
 

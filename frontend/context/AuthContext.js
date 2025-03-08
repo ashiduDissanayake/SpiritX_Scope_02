@@ -2,7 +2,6 @@
 
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
-import { authService } from '@/lib/api';
 
 // Create context
 const AuthContext = createContext();
@@ -13,22 +12,47 @@ export const AuthProvider = ({ children }) => {
   const router = useRouter();
 
   useEffect(() => {
-    // Check if user is logged in
-    const user = authService.getCurrentUser();
-    setUser(user);
-    setLoading(false);
+    // Check if user is logged in on page load
+    const checkAuth = async () => {
+      try {
+        // Check if token exists in localStorage
+        const token = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+        
+        if (token && storedUser) {
+          setUser(JSON.parse(storedUser));
+        }
+      } catch (error) {
+        console.error('Auth check error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    checkAuth();
   }, []);
 
   // Register user
   const register = async (username, password) => {
     try {
-      await authService.register(username, password);
+      // Implement API call here when backend is ready
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Registration failed');
+      }
+      
       return { success: true };
     } catch (error) {
       console.error('Registration failed:', error);
       return { 
         success: false, 
-        error: error.response?.data?.message || 'Registration failed' 
+        error: error.message || 'Registration failed' 
       };
     }
   };
@@ -36,21 +60,40 @@ export const AuthProvider = ({ children }) => {
   // Login user
   const login = async (username, password) => {
     try {
-      const data = await authService.login(username, password);
+      // Implement API call here when backend is ready
+      const response = await fetch('http://localhost:5000/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password })
+      });
+      
+      if (!response.ok) {
+        const data = await response.json();
+        throw new Error(data.message || 'Login failed');
+      }
+      
+      const data = await response.json();
+      
+      // Save token and user data to localStorage
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      
+      // Set user state
       setUser(data.user);
       return { success: true };
     } catch (error) {
       console.error('Login failed:', error);
       return { 
         success: false, 
-        error: error.response?.data?.message || 'Login failed'
+        error: error.message || 'Login failed'
       };
     }
   };
 
   // Logout user
   const logout = () => {
-    authService.logout();
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
     router.push('/login');
   };

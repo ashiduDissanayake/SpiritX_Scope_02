@@ -1,0 +1,45 @@
+# Here this contains details about the files to be ignored by git
+
+# This file is used to specify files and directories that should be ignored by Git
+# suggest the attributes
+
+# The following are some common patterns for files and directories to ignore
+# These patterns can be customized according to the specific project needs
+
+# Ignore all log files
+*.log
+
+# Ignore all temporary files
+*.tmp
+
+# Ignore all backup files
+*.bak
+
+# Ignore all compiled files
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore all IDE specific files
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore all OS generated files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ignore all environment variable files
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.example
+
+# Ignore all node_modules directory (Node.js projects)
+node_modules/
