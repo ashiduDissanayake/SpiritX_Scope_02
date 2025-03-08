@@ -35,8 +35,9 @@ exports.register = async (req, res) => {
       [username, hashedPassword]
     );
     
-    res.status(201).json({ 
+    res.status(200).json({ 
       message: 'User created successfully',
+      success:true,
       userId: result.insertId
     });
   } catch (error) {

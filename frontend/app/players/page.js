@@ -5,6 +5,7 @@ import PlayerCard from '@/components/user/PlayerCard';
 import Spiriter from '@/components/chatbot/Spiriter';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
+import io from "socket.io-client";
 import styles from './page.module.css';
 
 export default function PlayersPage() {
@@ -13,40 +14,75 @@ export default function PlayersPage() {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
   const { isAuthenticated, loading: authLoading } = useAuth();
+  const [showRestrictedMessage, setShowRestrictedMessage] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
-    // Redirect if not authenticated
+    // Handle authentication check and restricted message
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      setShowRestrictedMessage(true);
+      const timer = setTimeout(() => {
+        setShowRestrictedMessage(false);
+        router.push("/login");
+      }, 2000); // 2 seconds delay
+
+      // Cleanup timer on component unmount or if dependencies change
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, authLoading, router]);
   
   useEffect(() => {
+    if (!isAuthenticated) return;
+
+    // Connect to WebSocket server on port 3001
+    const socket = io("http://localhost:3001", {
+      cors: {
+        origin: "http://localhost:3000",
+      },
+    });
+
     const fetchPlayers = async () => {
       try {
         setLoading(true);
         const data = await playerService.getAllPlayers();
-        
-        // Fetch detailed stats for each player
         const playersWithStats = await Promise.all(
-          data.map(async player => {
+          data.map(async (player) => {
             const details = await playerService.getPlayerById(player.id);
             return details;
           })
         );
-        
         setPlayers(playersWithStats);
       } catch (error) {
-        console.error('Error fetching players:', error);
+        console.error("Error fetching players:", error);
       } finally {
         setLoading(false);
       }
     };
-    
-    if (isAuthenticated) {
-      fetchPlayers();
-    }
+
+    fetchPlayers();
+
+    // Debug WebSocket connection
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server");
+    });
+    socket.on("connect_error", (error) => {
+      console.error("WebSocket connection error:", error);
+    });
+
+    // Listen for real-time updates
+    socket.on("playerUpdated", (updatedPlayer) => {
+      console.log("Player updated:", updatedPlayer);
+      setPlayers((prevPlayers) =>
+        prevPlayers.map((player) =>
+          player.id === updatedPlayer.id ? updatedPlayer : player
+        )
+      );
+    });
+
+    // Cleanup
+    return () => {
+      socket.disconnect();
+    };
   }, [isAuthenticated]);
   
   // Filter players by category and search term
@@ -61,9 +97,14 @@ export default function PlayersPage() {
     return <div className={styles.loading}>Loading players...</div>;
   }
   
-  if (!isAuthenticated) {
-    return null; // Will redirect in useEffect
+  if (showRestrictedMessage) {
+    return (
+      <div className={styles.restrictedMessage}>
+        This is a restricted page. Redirecting to login in 2 seconds...
+      </div>
+    );
   }
+
   
   return (
     <div className={styles.playersPage}>

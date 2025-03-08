@@ -26,7 +26,9 @@ export default function TournamentSummaryPage() {
   }
   
   if (!user?.isAdmin) {
-    return null; // Will redirect in useEffect
+    return (<div className={styles.restrictedMessage}>
+      This is a restricted page. Redirecting to login in 2 seconds...
+    </div>); // Will redirect in useEffect
   }
   
   return (

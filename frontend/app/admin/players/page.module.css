@@ -13,7 +13,18 @@
     border-bottom: 2px solid #eaeaea;
     padding-bottom: 1rem;
   }
-  
+  .restrictedMessage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #721c24;
+    background-color: #f8d7da;
+    text-align: center;
+    padding: 20px;
+  }
   .header h1 {
     font-size: 2rem;
     font-weight: 700;

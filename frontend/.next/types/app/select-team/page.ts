@@ -1,4 +1,4 @@
-// File: /Users/ashidudissanayake/Dev/SpiritX_Scope_02/frontend/app/select-team/page.js
+// File: C:\Users\DASUN\Desktop\spiritx\q2\SpiritX_Scope_02\frontend\app\select-team\page.js
 import * as entry from '../../../../app/select-team/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

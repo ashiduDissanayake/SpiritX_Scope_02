@@ -1,5 +1,5 @@
 'use client';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useTeam } from '@/context/TeamContext';
 import TeamDisplay from '@/components/user/TeamDisplay';
@@ -13,12 +13,20 @@ import styles from './page.module.css';
 export default function MyTeamPage() {
   const { isAuthenticated, loading: authLoading } = useAuth();
   const { team, loading: teamLoading } = useTeam();
+  const [showRestrictedMessage, setShowRestrictedMessage] = useState(false);
   const router = useRouter();
   
   useEffect(() => {
-    // Redirect if not authenticated
+    // Handle authentication check and restricted message
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      setShowRestrictedMessage(true);
+      const timer = setTimeout(() => {
+        setShowRestrictedMessage(false);
+        router.push("/login");
+      }, 2000); // 2 seconds delay
+
+      // Cleanup timer on component unmount or if dependencies change
+      return () => clearTimeout(timer);
     }
   }, [isAuthenticated, authLoading, router]);
   
@@ -33,8 +41,12 @@ export default function MyTeamPage() {
     return <div className={styles.loading}>Loading team data...</div>;
   }
   
-  if (!isAuthenticated) {
-    return null; // Will redirect in useEffect
+  if (showRestrictedMessage) {
+    return (
+      <div className={styles.restrictedMessage}>
+        This is a restricted page. Redirecting to login in 2 seconds...
+      </div>
+    );
   }
   
   return (

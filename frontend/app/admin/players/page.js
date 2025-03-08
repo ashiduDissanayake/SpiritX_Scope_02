@@ -13,19 +13,28 @@ export default function PlayersManagementPage() {
   const [showAddForm, setShowAddForm] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const { user, isAuthenticated, loading: authLoading } = useAuth();
+  const [showRestrictedMessage, setShowRestrictedMessage] = useState(false);
   const router = useRouter();
-  
+
+
   useEffect(() => {
     // Check auth state and redirect if needed
     if (!authLoading) {
       if (!isAuthenticated) {
         router.push('/login');
       } else if (!user?.isAdmin) {
-        router.push('/players'); // Redirect non-admin users
+        setShowRestrictedMessage(true);
+        const timer = setTimeout(() => {
+          setShowRestrictedMessage(false);
+          router.push("/login");
+        }, 2000); // 2 seconds delay
+
+        // Cleanup timer on component unmount or if dependencies change
+        return () => clearTimeout(timer); // Redirect non-admin users
       }
     }
   }, [user, isAuthenticated, authLoading, router]);
-  
+
   const loadPlayers = async () => {
     try {
       setLoading(true);
@@ -37,13 +46,22 @@ export default function PlayersManagementPage() {
       setLoading(false);
     }
   };
-  
+
   useEffect(() => {
     if (isAuthenticated && user?.isAdmin) {
       loadPlayers();
+    }else{
+      setShowRestrictedMessage(true);
+        const timer = setTimeout(() => {
+          setShowRestrictedMessage(false);
+          router.push("/players");
+        }, 2000); // 2 seconds delay
+
+        // Cleanup timer on component unmount or if dependencies change
+        return () => clearTimeout(timer);
     }
   }, [isAuthenticated, user]);
-  
+
   const handleDeletePlayer = async (id) => {
     if (window.confirm('Are you sure you want to delete this player?')) {
       try {
@@ -55,36 +73,46 @@ export default function PlayersManagementPage() {
       }
     }
   };
-  
+
   // Filter players by search term
-  const filteredPlayers = players.filter(player => 
+  const filteredPlayers = players.filter(player =>
     player.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     player.university.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+
   if (authLoading || !isAuthenticated) {
     return <div className={styles.loading}>Loading...</div>;
   }
-  
-  if (!user?.isAdmin) {
-    return null; // Will redirect in useEffect
+
+  if (showRestrictedMessage) {
+    return (
+      <div className={styles.restrictedMessage}>
+        This is a restricted page. Redirecting to login in 2 seconds...
+      </div>
+    );
   }
-  
+
+  if (!user?.isAdmin) {
+    return (<div className={styles.restrictedMessage}>
+      This is a restricted page. Redirecting to login in 2 seconds...
+    </div>); // Will redirect in useEffect
+  }
+
   return (
     <div className={styles.playersManagement}>
       <div className={styles.header}>
         <h1>Players Management</h1>
-        <button 
+        <button
           className={styles.addButton}
           onClick={() => setShowAddForm(!showAddForm)}
         >
           {showAddForm ? 'Hide Form' : 'Add New Player'}
         </button>
       </div>
-      
+
       {showAddForm && (
         <div className={styles.formContainer}>
-          <PlayerForm 
+          <PlayerForm
             onSuccess={() => {
               loadPlayers();
               setShowAddForm(false);
@@ -92,7 +120,7 @@ export default function PlayersManagementPage() {
           />
         </div>
       )}
-      
+
       <div className={styles.searchContainer}>
         <input
           type="text"
@@ -102,7 +130,7 @@ export default function PlayersManagementPage() {
           className={styles.searchInput}
         />
       </div>
-      
+
       {loading ? (
         <div className={styles.loading}>Loading players...</div>
       ) : (
@@ -114,7 +142,7 @@ export default function PlayersManagementPage() {
             <div className={styles.statsColumn}>Stats</div>
             <div className={styles.actionsColumn}>Actions</div>
           </div>
-          
+
           {filteredPlayers.length > 0 ? (
             filteredPlayers.map(player => (
               <div key={player.id} className={styles.tableRow}>
@@ -128,7 +156,7 @@ export default function PlayersManagementPage() {
                   <Link href={`/admin/players/${player.id}`} className={styles.editButton}>
                     Stats
                   </Link>
-                  <button 
+                  <button
                     className={styles.deleteButton}
                     onClick={() => handleDeletePlayer(player.id)}
                   >

@@ -1,4 +1,4 @@
-// File: /Users/ashidudissanayake/Dev/SpiritX_Scope_02/frontend/app/layout.js
+// File: C:\Users\DASUN\Desktop\spiritx\q2\SpiritX_Scope_02\frontend\app\layout.js
 import * as entry from '../../../app/layout.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

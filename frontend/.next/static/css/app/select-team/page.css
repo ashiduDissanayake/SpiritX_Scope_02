@@ -1,5 +1,5 @@
 /*!*********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./components/user/PlayerCard.module.css ***!
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/user/PlayerCard.module.css ***!
   \*********************************************************************************************************************************************************************************************************************************************************************************/
 .PlayerCard_playerCard__lHeMM {
     background-color: var(--light-bg, #ffffff);
@@ -135,7 +135,7 @@
     background-color: rgba(40, 167, 69, 0.1);
   }
 /*!************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./components/user/BudgetTracker.module.css ***!
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/user/BudgetTracker.module.css ***!
   \************************************************************************************************************************************************************************************************************************************************************************************/
 .BudgetTracker_container__lp4iA {
     background: #fff;
@@ -212,7 +212,7 @@
     }
   }
 /*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./components/user/TeamCompletenessIndicator.module.css ***!
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/user/TeamCompletenessIndicator.module.css ***!
   \************************************************************************************************************************************************************************************************************************************************************************************************/
 .TeamCompletenessIndicator_completenessIndicator__Euh5Z {
     background-color: #ffffff;
@@ -290,7 +290,7 @@
     }
   }
 /*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./components/chatbot/Spiriter.module.css ***!
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/chatbot/Spiriter.module.css ***!
   \**********************************************************************************************************************************************************************************************************************************************************************************/
 .Spiriter_chatbotToggle__nze5y {
     position: fixed;
@@ -493,6 +493,17 @@
     }
   }
 /*!***************************************************************************************************************************************************************************************************************************************************************************!*\
-  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./app/select-team/page.module.css ***!
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./app/select-team/page.module.css ***!
   \***************************************************************************************************************************************************************************************************************************************************************************/
-
+.page_restrictedMessage__lsAOc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #721c24;
+    background-color: #f8d7da;
+    text-align: center;
+    padding: 20px;
+  }

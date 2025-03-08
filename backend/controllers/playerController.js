@@ -70,6 +70,7 @@ exports.createPlayer = async (req, res) => {
 };
 
 // Update player (Admin only)
+// Update player (Admin only)
 exports.updatePlayer = async (req, res) => {
   try {
     const { 
@@ -97,7 +98,20 @@ exports.updatePlayer = async (req, res) => {
        innings_played, wickets, overs_bowled, runs_conceded, playerId]
     );
     
-    res.json({ message: 'Player updated successfully' });
+    // Fetch updated player data
+    const [updatedPlayers] = await db.execute(
+      'SELECT * FROM players WHERE id = ?', 
+      [playerId]
+    );
+    const updatedPlayer = calculations.getPlayerFullStats(updatedPlayers[0]);
+
+    // Emit WebSocket event to all connected clients
+    req.io.emit('playerUpdated', updatedPlayer);
+
+    res.json({ 
+      message: 'Player updated successfully',
+      player: updatedPlayer 
+    });
   } catch (error) {
     console.error('Error updating player:', error);
     res.status(500).json({ message: 'Failed to update player' });

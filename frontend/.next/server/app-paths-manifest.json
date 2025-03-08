@@ -1,9 +1,7 @@
 {
+  "/admin/players/[id]/page": "app/admin/players/[id]/page.js",
   "/players/page": "app/players/page.js",
   "/select-team/page": "app/select-team/page.js",
-  "/my-team/page": "app/my-team/page.js",
-  "/leaderboard/page": "app/leaderboard/page.js",
-  "/register/page": "app/register/page.js",
-  "/page": "app/page.js",
-  "/login/page": "app/login/page.js"
+  "/admin/page": "app/admin/page.js",
+  "/admin/players/page": "app/admin/players/page.js"
 }
