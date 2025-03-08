@@ -39,8 +39,8 @@ export const AuthProvider = ({ children }) => {
       // Implement API call here when backend is ready
       const response =await authService.register(username, password);
       
-      if (!response.ok) {
-        const data = await response.json();
+      if (response.status != 200) {
+        const data = await response.data;
         throw new Error(data.message || 'Registration failed');
       }
       

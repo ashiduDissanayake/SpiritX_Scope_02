@@ -1,8 +1,8 @@
 {
-  "/admin/tournament-summary/page": "app/admin/tournament-summary/page.js",
-  "/login/page": "app/login/page.js",
-  "/players/page": "app/players/page.js",
-  "/leaderboard/page": "app/leaderboard/page.js",
   "/select-team/page": "app/select-team/page.js",
-  "/my-team/page": "app/my-team/page.js"
+  "/my-team/page": "app/my-team/page.js",
+  "/players/page": "app/players/page.js",
+  "/register/page": "app/register/page.js",
+  "/leaderboard/page": "app/leaderboard/page.js",
+  "/login/page": "app/login/page.js"
 }
