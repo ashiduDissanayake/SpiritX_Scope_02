@@ -174,7 +174,49 @@
   padding: 2rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
+.page_playerForm__rGZuM {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
 
+.page_formGroup__AYizm {
+  margin-bottom: 1rem;
+}
+
+.page_formGroup__AYizm label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.page_formGroup__AYizm input,
+.page_formGroup__AYizm select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page_submitButton__q64KJ {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.page_submitButton__q64KJ:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.page_error__zd1CF {
+  color: red;
+  margin-bottom: 1rem;
+}
 .page_header__nolKM {
   display: flex;
   align-items: center;

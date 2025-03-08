@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { playerService } from "@/lib/api";
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
+import io from "socket.io-client";
 import Link from "next/link";
 import PlayerForm from "@/components/admin/PlayerForm";
 import styles from "./page.module.css";
@@ -31,6 +32,26 @@ export default function PlayersManagementPage() {
       }
     }
   }, [user, isAuthenticated, authLoading, router]);
+
+  useEffect(() => {
+    if (isAuthenticated && user?.isAdmin) {
+      const socket = io("http://localhost:3001");
+      loadPlayers();
+  
+      socket.on("playerCreated", (newPlayer) => setPlayers((prev) => [...prev, newPlayer]));
+      socket.on("playerUpdated", (updatedPlayer) =>
+        setPlayers((prev) =>
+          prev.map((p) => (p.id === updatedPlayer.id ? updatedPlayer : p))
+        )
+      );
+      socket.on("playerDeleted", (deletedPlayer) =>
+        setPlayers((prev) => prev.filter((p) => p.id !== deletedPlayer.id))
+      );
+  
+      return () => socket.disconnect();
+    }
+  }, [isAuthenticated, user]);
+
 
   const loadPlayers = async () => {
     try {
