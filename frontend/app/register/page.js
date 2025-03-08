@@ -145,7 +145,7 @@ export default function RegisterPage() {
 
     try {
       const result = await register(formData.username, formData.password);
-
+      console.log(result);
       if (result.success) {
         setRegistrationSuccess(true);
       } else {

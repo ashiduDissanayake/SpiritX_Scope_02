@@ -1,0 +1,382 @@
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./components/admin/PlayerForm.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+.PlayerForm_playerForm__d8rJ3 {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    max-width: 100%;
+  }
+  
+  .PlayerForm_playerForm__d8rJ3 h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  
+  .PlayerForm_playerForm__d8rJ3 h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #334155;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .PlayerForm_formGroup__8xkPK {
+    margin-bottom: 1.5rem;
+  }
+  
+  .PlayerForm_formGroup__8xkPK label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #1e293b;
+    font-size: 0.875rem;
+  }
+  
+  .PlayerForm_formGroup__8xkPK input,
+  .PlayerForm_formGroup__8xkPK select {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+    color: #1e293b;
+    background-color: white;
+    transition: all 0.2s ease;
+  }
+  
+  .PlayerForm_formGroup__8xkPK input:focus,
+  .PlayerForm_formGroup__8xkPK select:focus {
+    outline: none;
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  }
+  
+  .PlayerForm_formGroup__8xkPK input[type="number"] {
+    -moz-appearance: textfield;
+  }
+  
+  .PlayerForm_formGroup__8xkPK input[type="number"]::-webkit-outer-spin-button,
+  .PlayerForm_formGroup__8xkPK input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  
+  .PlayerForm_statsGrid__BOAzR {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    gap: 1rem;
+  }
+  
+  .PlayerForm_error___Nj65 {
+    background-color: #fee2e2;
+    border-left: 4px solid #ef4444;
+    color: #b91c1c;
+    padding: 1rem;
+    border-radius: 0.25rem;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+  }
+  
+  .PlayerForm_submitButton__6hGnf {
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-top: 1.5rem;
+    width: auto;
+    min-width: 150px;
+  }
+  
+  .PlayerForm_submitButton__6hGnf:hover:not(:disabled) {
+    background-color: #4338ca;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .PlayerForm_submitButton__6hGnf:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+  
+  /* Add a cancel button style if needed */
+  .PlayerForm_cancelButton__ZrPbb {
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-right: 1rem;
+  }
+  
+  .PlayerForm_cancelButton__ZrPbb:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+  }
+  
+  /* Form actions container for button layouts */
+  .PlayerForm_formActions__vfqcH {
+    display: flex;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 768px) {
+    .PlayerForm_playerForm__d8rJ3 {
+      padding: 1.5rem;
+    }
+    
+    .PlayerForm_statsGrid__BOAzR {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .PlayerForm_formActions__vfqcH {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .PlayerForm_cancelButton__ZrPbb {
+      margin-right: 0;
+      order: 2;
+    }
+    
+    .PlayerForm_submitButton__6hGnf {
+      width: 100%;
+      order: 1;
+    }
+  }
+/*!**********************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[7].use[3]!./app/admin/players/[id]/page.module.css ***!
+  \**********************************************************************************************************************************************************************************************************************************************************************************/
+.page_editPlayerPage__RZd3A {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+.page_playerForm__rGZuM {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page_formGroup__AYizm {
+  margin-bottom: 1rem;
+}
+
+.page_formGroup__AYizm label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.page_formGroup__AYizm input,
+.page_formGroup__AYizm select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.page_submitButton__q64KJ {
+  padding: 0.5rem 1rem;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.page_submitButton__q64KJ:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.page_error__zd1CF {
+  color: red;
+  margin-bottom: 1rem;
+}
+.page_header__nolKM {
+  display: flex;
+  align-items: center;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #eaeaea;
+  padding-bottom: 1rem;
+  gap: 1.5rem;
+}
+
+.page_header__nolKM h1 {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.page_backButton__ETAxB {
+  display: inline-flex;
+  align-items: center;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.page_backButton__ETAxB:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.page_loading__4K9Ip {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 1.25rem;
+  color: #64748b;
+}
+
+.page_error__zd1CF {
+  background-color: #fee2e2;
+  border-left: 4px solid #ef4444;
+  color: #b91c1c;
+  padding: 1rem;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+/* Styles for the PlayerForm when rendered inside this page */
+.page_editPlayerPage__RZd3A .playerForm {
+  background-color: white;
+  border-radius: 0.5rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+}
+
+.page_editPlayerPage__RZd3A .formGroup {
+  margin-bottom: 1.5rem;
+}
+
+.page_editPlayerPage__RZd3A .formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.page_editPlayerPage__RZd3A .formGroup input,
+.page_editPlayerPage__RZd3A .formGroup select,
+.page_editPlayerPage__RZd3A .formGroup textarea {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.375rem;
+  font-size: 1rem;
+  color: #1e293b;
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.page_editPlayerPage__RZd3A .formGroup input:focus,
+.page_editPlayerPage__RZd3A .formGroup select:focus,
+.page_editPlayerPage__RZd3A .formGroup textarea:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.page_editPlayerPage__RZd3A .formActions {
+  display: flex;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.page_editPlayerPage__RZd3A .submitButton {
+  background-color: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.page_editPlayerPage__RZd3A .submitButton:hover {
+  background-color: #4338ca;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.page_editPlayerPage__RZd3A .cancelButton {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.375rem;
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page_editPlayerPage__RZd3A .cancelButton:hover {
+  background-color: #e2e8f0;
+  color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .page_editPlayerPage__RZd3A {
+    padding: 1rem;
+  }
+  
+  .page_header__nolKM {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+  
+  .page_editPlayerPage__RZd3A .playerForm {
+    padding: 1.5rem;
+  }
+  
+  .page_editPlayerPage__RZd3A .formActions {
+    flex-direction: column;
+  }
+  
+  .page_editPlayerPage__RZd3A .submitButton,
+  .page_editPlayerPage__RZd3A .cancelButton {
+    width: 100%;
+  }
+}

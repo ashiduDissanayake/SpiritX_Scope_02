@@ -9,27 +9,30 @@ export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const pathname = usePathname();
-  
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  
+
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
-  
+
   const isActive = (path) => {
-    return pathname === path || pathname.startsWith(`${path}/`);
+    if (path === "/admin") {
+      return pathname === path; // Exact match for Dashboard
+    }
+    return pathname === path || pathname.startsWith(`${path}/`); // Subpath match for others
   };
-  
+
   return (
     <header className={styles.header}>
       <div className={styles.container}>
         <div className={styles.logo}>
           <Link href="/">Spirit11</Link>
         </div>
-        
-        <button 
+
+        <button
           className={styles.menuToggle}
           onClick={toggleMenu}
           aria-label="Toggle menu"
@@ -38,29 +41,29 @@ export default function Header() {
           <span></span>
           <span></span>
         </button>
-        
+
         <nav className={`${styles.nav} ${isMenuOpen ? styles.open : ''}`}>
           {isAuthenticated ? (
             <>
               {user.isAdmin ? (
                 // Admin navigation
                 <>
-                  <Link 
-                    href="/admin" 
+                  <Link
+                    href="/admin"
                     className={isActive('/admin') ? styles.active : ''}
                     onClick={closeMenu}
                   >
                     Dashboard
                   </Link>
-                  <Link 
-                    href="/admin/players" 
+                  <Link
+                    href="/admin/players"
                     className={isActive('/admin/players') ? styles.active : ''}
                     onClick={closeMenu}
                   >
                     Players
                   </Link>
-                  <Link 
-                    href="/admin/tournament-summary" 
+                  <Link
+                    href="/admin/tournament-summary"
                     className={isActive('/admin/tournament-summary') ? styles.active : ''}
                     onClick={closeMenu}
                   >
@@ -69,30 +72,36 @@ export default function Header() {
                 </>
               ) : (
                 // User navigation
-                <>
-                  <Link 
-                    href="/players" 
+                <> <Link
+                  href="/dashboard"
+                  className={isActive('/dashboard') ? styles.active : ''}
+                  onClick={closeMenu}
+                >
+                  Dashboard
+                </Link>
+                  <Link
+                    href="/players"
                     className={isActive('/players') ? styles.active : ''}
                     onClick={closeMenu}
                   >
                     Players
                   </Link>
-                  <Link 
-                    href="/select-team" 
+                  <Link
+                    href="/select-team"
                     className={isActive('/select-team') ? styles.active : ''}
                     onClick={closeMenu}
                   >
                     Select Team
                   </Link>
-                  <Link 
-                    href="/my-team" 
+                  <Link
+                    href="/my-team"
                     className={isActive('/my-team') ? styles.active : ''}
                     onClick={closeMenu}
                   >
                     My Team
                   </Link>
-                  <Link 
-                    href="/leaderboard" 
+                  <Link
+                    href="/leaderboard"
                     className={isActive('/leaderboard') ? styles.active : ''}
                     onClick={closeMenu}
                   >
@@ -100,10 +109,10 @@ export default function Header() {
                   </Link>
                 </>
               )}
-              
+
               <div className={styles.userMenu}>
                 <span className={styles.username}>Hello, {user.username}</span>
-                <button 
+                <button
                   className={styles.logoutButton}
                   onClick={() => {
                     logout();
@@ -117,15 +126,15 @@ export default function Header() {
           ) : (
             // Not authenticated
             <>
-              <Link 
-                href="/login" 
+              <Link
+                href="/login"
                 className={isActive('/login') ? styles.active : ''}
                 onClick={closeMenu}
               >
                 Login
               </Link>
-              <Link 
-                href="/register" 
+              <Link
+                href="/register"
                 className={isActive('/register') ? styles.active : ''}
                 onClick={closeMenu}
               >

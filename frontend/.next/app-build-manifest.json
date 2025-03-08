@@ -1,10 +1,10 @@
 {
   "pages": {
-    "/page": [
+    "/players/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/page.css",
-      "static/chunks/app/page.js"
+      "static/css/app/players/page.css",
+      "static/chunks/app/players/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -12,11 +12,29 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/players/page": [
+    "/admin/players/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/players/page.css",
-      "static/chunks/app/players/page.js"
+      "static/css/app/admin/players/page.css",
+      "static/chunks/app/admin/players/page.js"
+    ],
+    "/login/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/login/page.css",
+      "static/chunks/app/login/page.js"
+    ],
+    "/admin/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/admin/page.css",
+      "static/chunks/app/admin/page.js"
+    ],
+    "/admin/players/[id]/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/admin/players/[id]/page.css",
+      "static/chunks/app/admin/players/[id]/page.js"
     ],
     "/select-team/page": [
       "static/chunks/webpack.js",
@@ -30,23 +48,23 @@
       "static/css/app/my-team/page.css",
       "static/chunks/app/my-team/page.js"
     ],
+    "/admin/tournament-summary/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/css/app/admin/tournament-summary/page.css",
+      "static/chunks/app/admin/tournament-summary/page.js"
+    ],
     "/leaderboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/css/app/leaderboard/page.css",
       "static/chunks/app/leaderboard/page.js"
     ],
-    "/login/page": [
+    "/dashboard/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/css/app/login/page.css",
-      "static/chunks/app/login/page.js"
-    ],
-    "/register/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/css/app/register/page.css",
-      "static/chunks/app/register/page.js"
+      "static/css/app/dashboard/page.css",
+      "static/chunks/app/dashboard/page.js"
     ]
   }
 }

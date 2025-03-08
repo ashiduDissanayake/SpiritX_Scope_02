@@ -24,7 +24,7 @@ export default function LoginPage() {
       if (user.isAdmin) {
         router.push('/admin');
       } else {
-        router.push('/players');
+        router.push('/dashboard');
       }
     }
   }, [isAuthenticated, user, router]);
