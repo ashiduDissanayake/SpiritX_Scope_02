@@ -33,61 +33,53 @@ export default function TournamentStats() {
   }, []);
   
   if (loading) {
-    return <div className={styles.loading}>Loading tournament statistics...</div>;
+    return <div className={styles.loadingState}>Loading tournament statistics...</div>;
   }
   
   if (error) {
-    return <div className={styles.error}>{error}</div>;
+    return <div className={styles.errorState}>{error}</div>;
   }
   
   return (
-    <div className={styles.tournamentStats}>
-      <h2>Tournament Summary</h2>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Tournament Summary</h1>
       
-      <div className={styles.statsGrid}>
-        <div className={styles.statCard}>
-          <h3>Total Runs</h3>
-          <div className={styles.statValue}>{stats.totalRuns}</div>
+      <div className={styles.statsSection}>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>Total Runs</span>
+          <span className={styles.statValue}>{stats.totalRuns}</span>
         </div>
         
-        <div className={styles.statCard}>
-          <h3>Total Wickets</h3>
-          <div className={styles.statValue}>{stats.totalWickets}</div>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>Total Wickets</span>
+          <span className={styles.statValue}>{stats.totalWickets}</span>
         </div>
       </div>
       
-      <h3>Top Performers</h3>
+      <h2 className={styles.sectionTitle}>Top Performers</h2>
       
-      <div className={styles.statsGrid}>
-        <div className={styles.performerCard}>
-          <h4>Highest Run Scorer</h4>
+      <div className={styles.statsSection}>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>Highest Run Scorer</span>
           {stats.highestRunScorer ? (
-            <>
-              <div className={styles.performerName}>
-                {stats.highestRunScorer.name}
-              </div>
-              <div className={styles.performerDetails}>
-                <span>{stats.highestRunScorer.university}</span>
-                <span>{stats.highestRunScorer.total_runs} runs</span>
-              </div>
-            </>
+            <div className={styles.playerCard}>
+              <div className={styles.playerName}>{stats.highestRunScorer.name}</div>
+              <div className={styles.playerUniversity}>{stats.highestRunScorer.university}</div>
+              <div className={styles.playerStats}>{stats.highestRunScorer.total_runs} runs</div>
+            </div>
           ) : (
             <div className={styles.noData}>No data available</div>
           )}
         </div>
         
-        <div className={styles.performerCard}>
-          <h4>Highest Wicket Taker</h4>
+        <div className={styles.statItem}>
+          <span className={styles.statLabel}>Highest Wicket Taker</span>
           {stats.highestWicketTaker ? (
-            <>
-              <div className={styles.performerName}>
-                {stats.highestWicketTaker.name}
-              </div>
-              <div className={styles.performerDetails}>
-                <span>{stats.highestWicketTaker.university}</span>
-                <span>{stats.highestWicketTaker.wickets} wickets</span>
-              </div>
-            </>
+            <div className={styles.playerCard}>
+              <div className={styles.playerName}>{stats.highestWicketTaker.name}</div>
+              <div className={styles.playerUniversity}>{stats.highestWicketTaker.university}</div>
+              <div className={styles.playerStats}>{stats.highestWicketTaker.wickets} wickets</div>
+            </div>
           ) : (
             <div className={styles.noData}>No data available</div>
           )}

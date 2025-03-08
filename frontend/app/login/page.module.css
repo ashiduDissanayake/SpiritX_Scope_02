@@ -1,0 +1,106 @@
+.loginPage {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - var(--header-height, 60px));
+    padding: 40px 20px;
+  }
+  
+  .formContainer {
+    background-color: var(--light-bg, #ffffff);
+    border-radius: 8px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 480px;
+  }
+  
+  .formContainer h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: var(--text-color, #333);
+  }
+  
+  .submitError {
+    background-color: rgba(220, 53, 69, 0.1);
+    color: var(--error-color, #dc3545);
+    padding: 10px 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .formGroup {
+    margin-bottom: 20px;
+  }
+  
+  .formGroup label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--text-color, #333);
+  }
+  
+  .formGroup input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color, #e1e1e1);
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.2s ease;
+  }
+  
+  .formGroup input:focus {
+    border-color: var(--primary-color, #2c62e8);
+    outline: none;
+  }
+  
+  .fieldError {
+    color: var(--error-color, #dc3545);
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  .loginButton {
+    width: 100%;
+    background-color: var(--primary-color, #2c62e8);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    margin-top: 10px;
+  }
+  
+  .loginButton:hover:not(:disabled) {
+    background-color: #1f4bc9;
+  }
+  
+  .loginButton:disabled {
+    background-color: #a0a0a0;
+    cursor: not-allowed;
+  }
+  
+  .registerLink {
+    text-align: center;
+    margin-top: 20px;
+    color: var(--light-text, #666);
+  }
+  
+  .registerLink a {
+    color: var(--primary-color, #2c62e8);
+    font-weight: 500;
+  }
+  
+  .registerLink a:hover {
+    text-decoration: underline;
+  }
+  
+  @media (max-width: 768px) {
+    .formContainer {
+      padding: 20px;
+    }
+  }

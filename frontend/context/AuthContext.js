@@ -2,6 +2,7 @@
 
 import { createContext, useState, useEffect, useContext } from 'react';
 import { useRouter } from 'next/navigation';
+import { authService } from '@/lib/api';
 
 // Create context
 const AuthContext = createContext();
@@ -36,11 +37,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (username, password) => {
     try {
       // Implement API call here when backend is ready
-      const response = await fetch('http://localhost:5000/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
+      const response =await authService.register(username, password);
       
       if (!response.ok) {
         const data = await response.json();
@@ -61,18 +58,15 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     try {
       // Implement API call here when backend is ready
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
-      });
-      
-      if (!response.ok) {
-        const data = await response.json();
+      const response =await authService.login(username, password);
+
+      if (response.status != 200) {
+        const data = await response.data;
         throw new Error(data.message || 'Login failed');
       }
       
-      const data = await response.json();
+      const data = await response.data;
+
       
       // Save token and user data to localStorage
       localStorage.setItem('token', data.token);

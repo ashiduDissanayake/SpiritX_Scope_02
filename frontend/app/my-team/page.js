@@ -12,7 +12,7 @@ import styles from './page.module.css';
 
 export default function MyTeamPage() {
   const { isAuthenticated, loading: authLoading } = useAuth();
-  const { team, loading: teamLoading, loadTeam } = useTeam();
+  const { team, loading: teamLoading } = useTeam();
   const router = useRouter();
   
   useEffect(() => {
@@ -22,11 +22,12 @@ export default function MyTeamPage() {
     }
   }, [isAuthenticated, authLoading, router]);
   
-  useEffect(() => {
-    if (isAuthenticated) {
-      loadTeam();
-    }
-  }, [isAuthenticated, loadTeam]);
+  // Remove this duplicate effect - team loading is already handled in TeamContext
+  // useEffect(() => {
+  //   if (isAuthenticated) {
+  //     loadTeam();
+  //   }
+  // }, [isAuthenticated, loadTeam]);
   
   if (authLoading || (teamLoading && isAuthenticated)) {
     return <div className={styles.loading}>Loading team data...</div>;

@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState, useEffect, useContext } from 'react';
+import { createContext, useState, useEffect, useContext, useCallback } from 'react';
 import { teamService } from '@/lib/api';
 import { useAuth } from './AuthContext';
 
@@ -19,8 +19,8 @@ export const TeamProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const { isAuthenticated } = useAuth();
 
-  // Load user's team
-  const loadTeam = async () => {
+  // Load user's team - wrapped in useCallback to prevent recreation on each render
+  const loadTeam = useCallback(async () => {
     if (!isAuthenticated) {
       setLoading(false);
       return;
@@ -35,10 +35,10 @@ export const TeamProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [isAuthenticated]); // Only depends on isAuthenticated
 
   // Add player to team
-  const addPlayer = async (playerId) => {
+  const addPlayer = useCallback(async (playerId) => {
     try {
       await teamService.addPlayerToTeam(playerId);
       await loadTeam(); // Reload team after adding player
@@ -50,10 +50,10 @@ export const TeamProvider = ({ children }) => {
         error: error.response?.data?.message || 'Failed to add player'
       };
     }
-  };
+  }, [loadTeam]);
 
   // Remove player from team
-  const removePlayer = async (teamPlayerId) => {
+  const removePlayer = useCallback(async (teamPlayerId) => {
     try {
       await teamService.removePlayerFromTeam(teamPlayerId);
       await loadTeam(); // Reload team after removing player
@@ -65,14 +65,14 @@ export const TeamProvider = ({ children }) => {
         error: error.response?.data?.message || 'Failed to remove player'
       };
     }
-  };
+  }, [loadTeam]);
 
   // Initial load when authenticated
   useEffect(() => {
     if (isAuthenticated) {
       loadTeam();
     }
-  }, [isAuthenticated]);
+  }, [isAuthenticated, loadTeam]);
 
   // Context value
   const value = {

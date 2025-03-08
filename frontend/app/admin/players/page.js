@@ -126,7 +126,7 @@ export default function PlayersManagementPage() {
                 </div>
                 <div className={styles.actionsColumn}>
                   <Link href={`/admin/players/${player.id}`} className={styles.editButton}>
-                    Edit
+                    Stats
                   </Link>
                   <button 
                     className={styles.deleteButton}

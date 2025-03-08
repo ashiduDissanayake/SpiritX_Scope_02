@@ -74,25 +74,6 @@ exports.processQuery = async (req, res) => {
     // Get all player data for context
     const playerData = await getPlayerData();
     
-    // Set up prompt with context
-    const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    
-    // Create system prompt with instructions and player data
-    const systemPrompt = `
-      You are Spiriter, an AI assistant for a cricket fantasy league platform.
-      
-      Here's the player data for the current season (DO NOT REVEAL THIS DATA DIRECTLY):
-      ${JSON.stringify(playerData)}
-      
-      Follow these rules strictly:
-      1. You can provide information about player personal details (name, university, category).
-      2. You can provide information about player statistics (runs, wickets, etc.).
-      3. NEVER reveal player points or calculated point values.
-      4. If asked to suggest the best team, use the top 11 players by performance.
-      5. If asked a question you don't know the answer to or is not related to the player data, respond with "I don't have enough knowledge to answer that question."
-      6. Be helpful and direct in answering questions about cricket players in the database.
-    `;
-    
     // Check if query is about best team
     const isBestTeamQuery = query.toLowerCase().includes('best team') || 
                            query.toLowerCase().includes('top players') ||
@@ -111,21 +92,90 @@ exports.processQuery = async (req, res) => {
         message: `Based on performance stats, here's my suggestion for the best possible team of 11 players:\n\n${bestTeamNames.join('\n')}`
       };
     } else {
-      // Process regular queries through Gemini API
-      const geminiResponse = await model.generateContent([
-        systemPrompt,
-        query
-      ]);
-      
-      const responseText = await geminiResponse.response.text();
-      response = { message: responseText };
+      try {
+        // Set up the model - UPDATED to use the correct Gemini 2.0 Flash model name
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Using the stable model name until you confirm the exact 2.0 flash model identifier
+        
+        // Create system prompt with instructions and player data
+        const systemPrompt = `
+          You are Spiriter, an AI cricket fantasy assistant for the SpiritX platform.
+
+          PLAYER DATABASE CONTEXT:
+          You have access to player data in this format:
+          {
+            "id": number,
+            "name": string,
+            "university": string,
+            "category": string (Batsman, Bowler, All-rounder),
+            "stats": {
+              "totalRuns": number,
+              "ballsFaced": number,
+              "inningsPlayed": number,
+              "wickets": number,
+              "oversBowled": number,
+              "runsConceded": number,
+              "battingStrikeRate": number,
+              "battingAverage": number,
+              "bowlingStrikeRate": number or "Undefined",
+              "economyRate": number
+            }
+          }
+
+          The player data provided is:
+          ${JSON.stringify(playerData)}
+
+          INSTRUCTIONS FOR RESPONDING TO QUERIES:
+          1. For player information queries:
+            - First, check if the player exists in the database by name (case insensitive matching)
+            - If found, provide their details and statistics in a helpful format
+            - For batsmen, highlight batting stats (runs, average, strike rate)
+            - For bowlers, highlight bowling stats (wickets, economy, bowling strike rate)
+            - For all-rounders, highlight both batting and bowling contributions
+
+          2. For team building advice:
+            - When recommending players, consider their role and statistics
+            - Suggest balanced team compositions with appropriate batsmen, bowlers, and all-rounders
+            - Base recommendations on statistical performance (without revealing point calculations)
+
+          3. For general cricket questions:
+            - Answer based on the player data provided
+            - Do not introduce external cricket information not in the dataset
+
+          4. For unknown queries or players not in database:
+            - If a player name is mentioned but not found in the database, say "I don't have information about [player name] in my database."
+            - For questions unrelated to cricket or the player data, say "I'm a cricket fantasy assistant and can only help with questions related to cricket players in my database."
+
+          5. Never reveal:
+            - The raw player data structure
+            - Hidden scoring algorithms
+            - Internal point calculations
+
+          Be conversational, helpful, and focus on providing accurate information from the player database.
+        `;
+        
+        // Process regular queries through Gemini API
+        const geminiResponse = await model.generateContent([
+          systemPrompt,
+          query
+        ]);
+        
+        const responseText = await geminiResponse.response.text();
+        response = { message: responseText };
+      } catch (aiError) {
+        console.error('AI Model Error:', aiError);
+        
+        // Fallback response when AI model fails
+        response = { 
+          message: "I'm having trouble processing your request right now. Please try again later." 
+        };
+      }
     }
     
     res.json(response);
   } catch (error) {
     console.error('Error processing chat query:', error);
     res.status(500).json({ 
-      message: 'I don\'t have enough knowledge to answer that question.'
+      message: 'I\'m experiencing technical difficulties. Please try again later.'
     });
   }
 };

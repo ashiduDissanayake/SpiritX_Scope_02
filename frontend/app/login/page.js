@@ -1,6 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
+import { authService } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import styles from './page.module.css';

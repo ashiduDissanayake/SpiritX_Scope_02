@@ -26,14 +26,14 @@ api.interceptors.request.use(
 export const authService = {
   register: async (username, password) => {
     const response = await api.post('/auth/register', { username, password });
-    return response.data;
+    return response;
   },
   
   login: async (username, password) => {
     const response = await api.post('/auth/login', { username, password });
     localStorage.setItem('token', response.data.token);
     localStorage.setItem('user', JSON.stringify(response.data.user));
-    return response.data;
+    return response;
   },
   
   logout: () => {

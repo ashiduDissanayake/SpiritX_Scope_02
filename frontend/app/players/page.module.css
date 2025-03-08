@@ -1,0 +1,74 @@
+.playersPage {
+    padding: 20px 0;
+  }
+  
+  .filters {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .searchBar {
+    width: 100%;
+    max-width: 500px;
+  }
+  
+  .searchBar input {
+    width: 100%;
+    padding: 10px 16px;
+    border: 1px solid var(--border-color, #e1e1e1);
+    border-radius: 6px;
+    font-size: 1rem;
+  }
+  
+  .categoryFilter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .categoryFilter button {
+    background-color: var(--light-bg, #ffffff);
+    border: 1px solid var(--border-color, #e1e1e1);
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .categoryFilter button.activeFilter {
+    background-color: var(--primary-color, #2c62e8);
+    color: white;
+    border-color: var(--primary-color, #2c62e8);
+  }
+  
+  .playersList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .noPlayers {
+    text-align: center;
+    padding: 40px;
+    color: var(--light-text, #666);
+    background-color: var(--light-bg, #ffffff);
+    border-radius: 8px;
+    grid-column: 1 / -1;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 200px;
+    font-size: 1.2rem;
+    color: var(--light-text, #666);
+  }
+  
+  @media (max-width: 768px) {
+    .categoryFilter {
+      justify-content: center;
+    }
+  }

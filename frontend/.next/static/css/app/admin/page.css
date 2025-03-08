@@ -1,0 +1,213 @@
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./components/admin/TournamentStats.module.css ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+.TournamentStats_container__Qd_fe {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+  
+  .TournamentStats_loadingState__ecbhP, .TournamentStats_errorState__t2J8R {
+    text-align: center;
+    padding: 40px;
+    font-size: 18px;
+  }
+  
+  .TournamentStats_errorState__t2J8R {
+    color: #d32f2f;
+  }
+  
+  .TournamentStats_heading__ifWVW {
+    color: #1e3a8a;
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
+  }
+  
+  .TournamentStats_statsSection__bCcWE {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 25px;
+  }
+  
+  .TournamentStats_sectionTitle__qkSXc {
+    color: #334155;
+    font-size: 22px;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #e5e7eb;
+    padding-bottom: 8px;
+  }
+  
+  .TournamentStats_statItem__NCwq9 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  
+  .TournamentStats_statItem__NCwq9:last-child {
+    border-bottom: none;
+  }
+  
+  .TournamentStats_statLabel__uHhTD {
+    font-weight: 600;
+    color: #64748b;
+  }
+  
+  .TournamentStats_statValue__PBVcF {
+    font-weight: 500;
+    color: #0f172a;
+    font-size: 18px;
+  }
+  
+  .TournamentStats_playerCard__pyrQk {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+  
+  .TournamentStats_playerName__8C7j7 {
+    font-weight: 700;
+    font-size: 18px;
+    color: #1e3a8a;
+    margin-bottom: 5px;
+  }
+  
+  .TournamentStats_playerUniversity__PrFD8 {
+    font-style: italic;
+    color: #64748b;
+    margin-bottom: 8px;
+  }
+  
+  .TournamentStats_playerStats__g2K20 {
+    font-weight: 600;
+    color: #0f172a;
+  }
+  
+  .TournamentStats_noData__cBpij {
+    font-style: italic;
+    color: #94a3b8;
+    text-align: center;
+    padding: 15px 0;
+  }
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./app/admin/page.module.css ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+.page_adminDashboard__SXGOV {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .page_adminDashboard__SXGOV h1 {
+    color: #1e3a8a;
+    margin-bottom: 30px;
+    font-size: 32px;
+    border-bottom: 3px solid #e5e7eb;
+    padding-bottom: 15px;
+  }
+  
+  .page_loading__relU1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-size: 20px;
+    color: #64748b;
+  }
+  
+  .page_adminModules__Gsgbo {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 30px;
+    gap: 30px;
+  }
+  
+  .page_moduleGrid__dBMUI {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    grid-gap: 20px;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
+  
+  .page_moduleCard__suR05 {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 25px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 1px solid #e5e7eb;
+    height: 100%;
+  }
+  
+  .page_moduleCard__suR05:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-color: #cbd5e1;
+  }
+  
+  .page_moduleCard__suR05 h2 {
+    color: #1e3a8a;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 22px;
+  }
+  
+  .page_moduleCard__suR05 p {
+    color: #64748b;
+    margin-bottom: 0;
+    font-size: 16px;
+  }
+  
+  .page_statsSummary__zBo8e {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  /* Responsive adjustments */
+  @media (min-width: 768px) {
+    .page_adminModules__Gsgbo {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .page_adminModules__Gsgbo {
+      grid-template-columns: 1fr 1fr;
+    }
+    
+    .page_moduleGrid__dBMUI {
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (max-width: 767px) {
+    .page_adminDashboard__SXGOV h1 {
+      font-size: 28px;
+    }
+    
+    .page_moduleCard__suR05 {
+      padding: 20px;
+    }
+    
+    .page_moduleCard__suR05 h2 {
+      font-size: 20px;
+    }
+  }

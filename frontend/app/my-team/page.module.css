@@ -1,0 +1,91 @@
+.myTeamPage {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  
+  .myTeamPage h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    font-size: 1.2rem;
+    color: #666;
+  }
+  
+  .teamContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .statsContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .actionContainer {
+    background-color: #fff3bf;
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+  }
+  
+  .actionContainer p {
+    font-size: 1rem;
+    color: #856404;
+    margin-bottom: 1rem;
+  }
+  
+  .selectMoreButton {
+    display: inline-block;
+    background-color: #5c7cfa;
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .selectMoreButton:hover {
+    background-color: #4263eb;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .myTeamPage {
+      padding: 1.5rem 1rem;
+    }
+    
+    .myTeamPage h1 {
+      font-size: 1.75rem;
+    }
+    
+    .statsContainer {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .myTeamPage h1 {
+      font-size: 1.5rem;
+    }
+    
+    .actionContainer {
+      padding: 1.25rem;
+    }
+  }

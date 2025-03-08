@@ -39,6 +39,12 @@ a {
 
 button {
   cursor: pointer;
+  border: none;
+  font-family: inherit;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -75,3 +81,150 @@ h1, h2, h3, h4, h5, h6 {
     padding-top: calc(var(--header-height) + 16px);
   }
 }
+/*!*******************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./components/common/Header.module.css ***!
+  \*******************************************************************************************************************************************************************************************************************************************************************************/
+.Header_header__NnYWQ {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    height: var(--header-height, 60px);
+  }
+  
+  .Header_container__5UUUT {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100%;
+  }
+  
+  .Header_logo___1J6C {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color, #2c62e8);
+  }
+  
+  .Header_nav__GYNr3 {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .Header_nav__GYNr3 a {
+    color: var(--text-color, #333);
+    font-weight: 500;
+    transition: color 0.2s ease;
+    padding: 8px 0;
+    position: relative;
+  }
+  
+  .Header_nav__GYNr3 a:hover,
+  .Header_nav__GYNr3 a.Header_active__oRUfl {
+    color: var(--primary-color, #2c62e8);
+  }
+  
+  .Header_nav__GYNr3 a.Header_active__oRUfl::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--primary-color, #2c62e8);
+  }
+  
+  .Header_userMenu__1HX1T {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid var(--border-color, #e1e1e1);
+  }
+  
+  .Header_username__uLmK1 {
+    font-weight: 500;
+  }
+  
+  .Header_logoutButton__oeXC3 {
+    background-color: transparent;
+    border: 1px solid var(--primary-color, #2c62e8);
+    color: var(--primary-color, #2c62e8);
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .Header_logoutButton__oeXC3:hover {
+    background-color: var(--primary-color, #2c62e8);
+    color: white;
+  }
+  
+  .Header_menuToggle__mdXgK {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+  
+  .Header_menuToggle__mdXgK span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--text-color, #333);
+    transition: all 0.3s ease;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .Header_menuToggle__mdXgK {
+      display: flex;
+    }
+    
+    .Header_nav__GYNr3 {
+      position: absolute;
+      top: var(--header-height, 60px);
+      left: 0;
+      right: 0;
+      background-color: white;
+      flex-direction: column;
+      align-items: flex-start;
+      padding: 20px;
+      gap: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      transform: translateY(-100%);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: -1;
+    }
+    
+    .Header_nav__GYNr3.Header_open__d3de0 {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .Header_userMenu__1HX1T {
+      margin: 0;
+      padding: 15px 0 0;
+      border-left: none;
+      border-top: 1px solid var(--border-color, #e1e1e1);
+      width: 100%;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
