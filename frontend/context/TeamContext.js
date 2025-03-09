@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useState, useEffect, useContext, useCallback } from 'react';
+import { createContext, useState, useEffect, useContext, useCallback, useMemo } from 'react';
 import { teamService } from '@/lib/api';
 import { useAuth } from './AuthContext';
 
@@ -67,6 +67,66 @@ export const TeamProvider = ({ children }) => {
     }
   }, [loadTeam]);
 
+  // Calculate team composition details for chatbot context
+  const teamComposition = useMemo(() => {
+    if (!team.players || team.players.length === 0) {
+      return {
+        batsmen: 0,
+        bowlers: 0,
+        allRounders: 0
+      };
+    }
+
+    const composition = {
+      batsmen: team.players.filter(player => player.category === 'Batsman').length,
+      bowlers: team.players.filter(player => player.category === 'Bowler').length,
+      allRounders: team.players.filter(player => player.category === 'All-rounder').length
+    };
+
+    return composition;
+  }, [team.players]);
+
+  // Formatted team data for chatbot
+  const chatbotTeamData = useMemo(() => {
+    if (!team.teamId) return null;
+
+    // Get captain and vice-captain if selected
+    const captain = team.players.find(player => player.isCaptain);
+    const viceCaptain = team.players.find(player => player.isViceCaptain);
+
+    return {
+      teamId: team.teamId,
+      budget: {
+        total: 9000000, // Assuming this is the fixed starting budget
+        spent: team.budgetSpent,
+        remaining: team.remainingBudget
+      },
+      teamComposition: {
+        totalPlayers: team.totalPlayers,
+        batsmen: teamComposition.batsmen,
+        bowlers: teamComposition.bowlers,
+        allRounders: teamComposition.allRounders,
+        hasFullTeam: team.totalPlayers === 11,
+        hasCaptain: !!captain,
+        hasViceCaptain: !!viceCaptain
+      },
+      players: team.players.map(player => ({
+        id: player.id,
+        name: player.name,
+        university: player.university,
+        category: player.category,
+        marketValue: player.marketValue,
+        isCaptain: player.isCaptain,
+        isViceCaptain: player.isViceCaptain
+      })),
+      roleDistribution: {
+        needsMoreBatsmen: teamComposition.batsmen < 4,
+        needsMoreBowlers: teamComposition.bowlers < 4,
+        needsMoreAllRounders: teamComposition.allRounders < 2
+      }
+    };
+  }, [team, teamComposition]);
+
   // Initial load when authenticated
   useEffect(() => {
     if (isAuthenticated) {
@@ -81,7 +141,9 @@ export const TeamProvider = ({ children }) => {
     loadTeam,
     addPlayer,
     removePlayer,
-    isComplete: team.totalPlayers === 11
+    isComplete: team.totalPlayers === 11,
+    teamComposition,
+    chatbotTeamData // Add the formatted data for chatbot
   };
 
   return <TeamContext.Provider value={value}>{children}</TeamContext.Provider>;

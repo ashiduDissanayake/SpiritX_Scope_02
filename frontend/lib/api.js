@@ -124,10 +124,18 @@ export const statsService = {
 
 // Chatbot services
 export const chatbotService = {
-  sendQuery: async (query) => {
-    const response = await api.post('/chatbot/query', { query });
-    return response.data;
-  },
+  sendQuery: async (query, context = {}) => {
+    try {
+      const response = await api.post('/chatbot/query', {
+        query,
+        ...context
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error sending chatbot query:', error);
+      throw error;
+    }
+  }
 };
 
 export default api;

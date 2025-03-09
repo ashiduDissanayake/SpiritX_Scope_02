@@ -70,6 +70,8 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'), // Add this for markdown styling
+  ],
   darkMode: 'class', // Enable dark mode with class
 }

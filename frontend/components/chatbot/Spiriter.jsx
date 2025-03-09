@@ -1,17 +1,61 @@
 'use client';
+
 import { useState, useRef, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 import { chatbotService } from '@/lib/api';
 import { useAuth } from '@/context/AuthContext';
+import { useTeam } from '@/context/TeamContext';
+import ReactMarkdown from 'react-markdown';
 
 export default function Spiriter() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([
-    { sender: 'bot', text: "Hi! I'm Spiriter, your cricket fantasy assistant. How can I help you?" }
+    { 
+      sender: 'bot', 
+      text: "Hi! I'm Spiriter, your cricket fantasy assistant. How can I help you?",
+      formatted: false 
+    }
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const { isAuthenticated } = useAuth();
+  const { team } = useTeam();
+  const pathname = usePathname();
   const messagesEndRef = useRef(null);
+  
+  // Determine current page context
+  const getCurrentPageContext = () => {
+    if (pathname?.includes('/select-team')) return 'select-team';
+    if (pathname?.includes('/my-team')) return 'my-team';
+    return null;
+  };
+  
+  // Prepare team data for chatbot
+  const getTeamContextData = () => {
+    if (!team || !team.teamId) return null;
+    
+    return {
+      teamId: team.teamId,
+      budget: {
+        total: 9000000,
+        remaining: team.remainingBudget
+      },
+      teamComposition: {
+        totalPlayers: team.totalPlayers,
+        batsmen: team.players.filter(p => p.category === 'Batsman').length,
+        bowlers: team.players.filter(p => p.category === 'Bowler').length,
+        allRounders: team.players.filter(p => p.category === 'All-rounder').length
+      },
+      players: team.players.map(p => ({
+        id: p.id,
+        name: p.name,
+        university: p.university,
+        category: p.category,
+        isCaptain: p.isCaptain,
+        isViceCaptain: p.isViceCaptain
+      }))
+    };
+  };
   
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -27,7 +71,7 @@ export default function Spiriter() {
     if (!input.trim() || loading || !isAuthenticated) return;
     
     // Add user message
-    const userMessage = { sender: 'user', text: input };
+    const userMessage = { sender: 'user', text: input, formatted: false };
     setMessages(prev => [...prev, userMessage]);
     
     // Clear input and set loading
@@ -35,13 +79,20 @@ export default function Spiriter() {
     setLoading(true);
     
     try {
-      // Send query to chatbot API
-      const response = await chatbotService.sendQuery(input);
+      // Get current page information
+      const currentPage = getCurrentPageContext();
+      
+      // Send query to chatbot API with context
+      const response = await chatbotService.sendQuery(input, {
+        currentPage,
+        teamContext: getTeamContextData()
+      });
       
       // Add bot response
       setMessages(prev => [...prev, { 
         sender: 'bot', 
-        text: response.message 
+        text: response.message,
+        formatted: response.formatted || false
       }]);
     } catch (error) {
       console.error('Error getting chatbot response:', error);
@@ -49,7 +100,8 @@ export default function Spiriter() {
       // Add error message
       setMessages(prev => [...prev, { 
         sender: 'bot', 
-        text: "I don't have enough knowledge to answer that question."
+        text: "I don't have enough knowledge to answer that question.",
+        formatted: false
       }]);
     } finally {
       setLoading(false);
@@ -61,78 +113,65 @@ export default function Spiriter() {
     setIsOpen(prev => !prev);
   };
   
+  // Render message with or without formatting
+  const renderMessage = (message) => {
+    if (message.formatted) {
+      return (
+        <div className="prose prose-sm max-w-none prose-headings:text-indigo-700 prose-strong:text-blue-600 prose-strong:font-bold prose-a:text-blue-600 prose-li:my-1">
+          <ReactMarkdown>{message.text}</ReactMarkdown>
+        </div>
+      );
+    }
+    return message.text;
+  };
+  
   return (
     <>
       {/* Chatbot toggle button */}
       <button 
-        className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-primary to-primary-dark text-light py-3 px-6 rounded-full shadow-lg hover:shadow-primary/30 transition-all duration-300 flex items-center gap-2 group"
+        className={`fixed bottom-5 right-5 px-5 py-3 rounded-full font-bold shadow-lg transition-all duration-300 transform hover:scale-105 z-50
+          ${isOpen ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-indigo-600 hover:bg-indigo-700 text-white'}`}
         onClick={toggleChatbot}
+        aria-label={isOpen ? 'Close Spiriter' : 'Open Spiriter'}
       >
-        {isOpen ? (
-          <>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-            </svg>
-            Close Spiriter
-          </>
-        ) : (
-          <>
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-              <path d="M2 5a2 2 0 012-2h7a2 2 0 012 2v4a2 2 0 01-2 2H9l-3 3v-3H4a2 2 0 01-2-2V5z" />
-              <path d="M15 7v2a4 4 0 01-4 4H9.828l-1.766 1.767c.28.149.599.233.938.233h2l3 3v-3h2a2 2 0 002-2V9a2 2 0 00-2-2h-1z" />
-            </svg>
-            <span>Ask Spiriter</span>
-            <span className="absolute right-0 top-0 w-3 h-3 bg-boundary rounded-full animate-ping opacity-75"></span>
-          </>
-        )}
+        {isOpen ? 'Close Spiriter' : 'Ask Spiriter'}
       </button>
       
       {/* Chatbot dialog */}
       {isOpen && (
-        <div className="fixed bottom-24 right-6 w-full max-w-sm bg-dark-lighter border border-dark-lightest rounded-xl shadow-2xl z-50 overflow-hidden animate-slide-up">
-          {/* Header */}
-          <div className="bg-gradient-to-r from-primary-dark to-primary px-4 py-3 flex justify-between items-center">
-            <h3 className="text-light font-medium flex items-center">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10 3.5a1.5 1.5 0 013 0V4a1 1 0 001 1h3a1 1 0 011 1v3a1 1 0 01-1 1h-.5a1.5 1.5 0 000 3h.5a1 1 0 011 1v3a1 1 0 01-1 1h-3a1 1 0 01-1-1v-.5a1.5 1.5 0 00-3 0v.5a1 1 0 01-1 1H6a1 1 0 01-1-1v-3a1 1 0 00-1-1h-.5a1.5 1.5 0 010-3H4a1 1 0 001-1V6a1 1 0 011-1h3a1 1 0 001-1v-.5z" />
-              </svg>
-              Spiriter - Cricket Assistant
-            </h3>
+        <div className="fixed bottom-20 right-5 w-[350px] h-[500px] bg-white rounded-xl shadow-2xl flex flex-col z-50 overflow-hidden animate-chatbot-slide-in">
+          <div className="flex justify-between items-center px-4 py-3 bg-gradient-to-r from-indigo-600 to-indigo-800 text-white">
+            <h3 className="text-lg font-semibold">Spiriter - Cricket Assistant</h3>
             <button 
-              className="text-light/80 hover:text-light transition-colors"
+              className="text-white hover:text-indigo-200 transition-colors"
               onClick={toggleChatbot}
+              aria-label="Close"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
           
-          {/* Messages */}
-          <div className="h-80 overflow-y-auto p-4 bg-dark">
+          <div className="flex-1 overflow-y-auto p-4 bg-slate-50">
             {messages.map((msg, index) => (
               <div 
                 key={index}
-                className={`mb-3 max-w-[85%] ${msg.sender === 'user' ? 'ml-auto' : 'mr-auto'}`}
+                className={`mb-3 p-3 rounded-lg max-w-[80%] break-words leading-relaxed
+                  ${msg.sender === 'user' 
+                    ? 'ml-auto bg-indigo-600 text-white rounded-br-sm' 
+                    : 'mr-auto bg-white text-gray-800 border border-gray-200 rounded-bl-sm shadow-sm'}`}
               >
-                <div className={`rounded-lg px-4 py-2 inline-block ${
-                  msg.sender === 'user' 
-                    ? 'bg-primary text-light rounded-tr-none' 
-                    : 'bg-dark-lighter text-light rounded-tl-none'
-                }`}>
-                  {msg.text}
-                </div>
+                {renderMessage(msg)}
               </div>
             ))}
             
             {loading && (
-              <div className="mb-3 max-w-[85%] mr-auto">
-                <div className="rounded-lg px-4 py-3 bg-dark-lighter text-light rounded-tl-none inline-block">
-                  <div className="flex space-x-1">
-                    <div className="w-2 h-2 rounded-full bg-light-darkest animate-bounce"></div>
-                    <div className="w-2 h-2 rounded-full bg-light-darkest animate-bounce" style={{ animationDelay: "0.15s" }}></div>
-                    <div className="w-2 h-2 rounded-full bg-light-darkest animate-bounce" style={{ animationDelay: "0.3s" }}></div>
-                  </div>
+              <div className="mb-3 p-3 rounded-lg max-w-[80%] mr-auto bg-white text-gray-800 border border-gray-200 rounded-bl-sm shadow-sm">
+                <div className="flex items-center space-x-1">
+                  <div className="w-2 h-2 rounded-full bg-indigo-400 animate-chatbot-pulse" style={{ animationDelay: '0s' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-indigo-400 animate-chatbot-pulse" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 rounded-full bg-indigo-400 animate-chatbot-pulse" style={{ animationDelay: '0.4s' }}></div>
                 </div>
               </div>
             )}
@@ -140,37 +179,80 @@ export default function Spiriter() {
             <div ref={messagesEndRef} />
           </div>
           
-          {/* Input area */}
           <form 
-            className="p-3 border-t border-dark-lightest flex gap-2"
+            className="flex p-3 border-t border-gray-200 bg-white"
             onSubmit={handleSendMessage}
           >
             <input
               type="text"
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask about players or team suggestions..."
+              placeholder={getCurrentPageContext() ? "Ask about your team..." : "Ask about players or team suggestions..."}
               disabled={loading || !isAuthenticated}
-              className="flex-1 bg-dark-lightest text-light px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/60 disabled:opacity-70"
+              aria-label="Chat message input"
+              className="flex-1 px-4 py-2 border text-slate-600 border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
             <button 
               type="submit"
               disabled={loading || !input.trim() || !isAuthenticated}
-              className="bg-primary hover:bg-primary-dark disabled:bg-primary/50 text-light px-4 py-2 rounded-lg transition-colors disabled:cursor-not-allowed"
+              aria-label="Send message"
+              className="ml-2 p-2 bg-indigo-600 text-white rounded-full font-medium disabled:bg-gray-400 disabled:cursor-not-allowed hover:bg-indigo-700 transition-colors"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
             </button>
           </form>
           
           {!isAuthenticated && (
-            <div className="px-3 py-2 bg-boundary/10 text-boundary text-center text-sm">
+            <div className="text-center text-red-600 p-2 text-sm font-medium bg-red-50 border-t border-red-200">
               Please login to use Spiriter
+            </div>
+          )}
+
+          {getCurrentPageContext() && team && team.teamId && (
+            <div className="flex items-center justify-center p-2 bg-emerald-50 border-t border-emerald-200 text-xs font-medium text-emerald-700">
+              <svg className="w-4 h-4 mr-1 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+              Team context enabled
             </div>
           )}
         </div>
       )}
+
+      {/* Add animation keyframes */}
+      <style jsx global>{`
+        @keyframes chatbot-slide-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-chatbot-slide-in {
+          animation: chatbot-slide-in 0.3s forwards ease-out;
+        }
+        
+        .animate-chatbot-pulse {
+          animation: chatbot-pulse 1.5s infinite;
+        }
+        
+        @keyframes chatbot-pulse {
+          0%, 100% {
+            opacity: 0.4;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+      `}</style>
     </>
   );
 }

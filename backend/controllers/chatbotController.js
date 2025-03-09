@@ -63,10 +63,76 @@ async function getBestTeam() {
   return playersWithStats.slice(0, 11);
 }
 
+// Helper: Get user team data (without assuming market_value column exists)
+async function getUserTeamData(userId) {
+  try {
+    // First check if the user has a team
+    const [userTeams] = await db.execute(
+      "SELECT id FROM user_teams WHERE user_id = ?",
+      [userId]
+    );
+    
+    if (userTeams.length === 0) {
+      return null; // User has no team
+    }
+    
+    const teamId = userTeams[0].id;
+    
+    // Get the team's players
+    const [teamPlayers] = await db.execute(`
+      SELECT p.id, p.name, p.university, p.category,
+             p.total_runs, p.balls_faced, p.innings_played, p.wickets, 
+             p.overs_bowled, p.runs_conceded, tp.is_captain, tp.is_vice_captain
+      FROM team_players tp
+      JOIN players p ON tp.player_id = p.id
+      WHERE tp.team_id = ?
+    `, [teamId]);
+    
+    // Get team budget info
+    const [teamInfo] = await db.execute(
+      "SELECT total_budget, remaining_budget FROM user_teams WHERE id = ?",
+      [teamId]
+    );
+    
+    // Format the result
+    const playersByRole = {
+      batsmen: teamPlayers.filter(p => p.category === "Batsman"),
+      bowlers: teamPlayers.filter(p => p.category === "Bowler"),
+      allRounders: teamPlayers.filter(p => p.category === "All-rounder"),
+    };
+    
+    return {
+      teamId,
+      budget: {
+        total: teamInfo[0]?.total_budget || 0,
+        remaining: teamInfo[0]?.remaining_budget || 0
+      },
+      teamComposition: {
+        totalPlayers: teamPlayers.length,
+        batsmen: playersByRole.batsmen.length,
+        bowlers: playersByRole.bowlers.length, 
+        allRounders: playersByRole.allRounders.length
+      },
+      players: teamPlayers.map(p => ({
+        id: p.id,
+        name: p.name,
+        university: p.university,
+        category: p.category,
+        isCaptain: p.is_captain === 1,
+        isViceCaptain: p.is_vice_captain === 1
+      }))
+    };
+  } catch (error) {
+    console.error("Error fetching user team data:", error);
+    return null;
+  }
+}
+
 // Process chat query and get response
 exports.processQuery = async (req, res) => {
   try {
-    const { query } = req.body;
+    const { query, currentPage, teamContext } = req.body;
+    const userId = req.user.id;
 
     if (!query) {
       return res.status(400).json({ message: "Query is required" });
@@ -74,6 +140,12 @@ exports.processQuery = async (req, res) => {
 
     // Get all player data for context
     const playerData = await getPlayerData();
+    
+    // Get user's team data if available - prefer passed teamContext but fetch if needed
+    let userTeamData = teamContext;
+    if (!userTeamData && (currentPage === "select-team" || currentPage === "my-team")) {
+      userTeamData = await getUserTeamData(userId);
+    }
 
     // Check if query is about best team
     const isBestTeamQuery =
@@ -87,18 +159,41 @@ exports.processQuery = async (req, res) => {
       // Get best team data but don't expose points
       const bestTeam = await getBestTeam();
       const bestTeamNames = bestTeam.map(
-        (player) => `${player.name} (${player.university}, ${player.category})`
+        (player) => `**${player.name}** (${player.university}, ${player.category})`
       );
 
       response = {
         message: `Based on performance stats, here's my suggestion for the best possible team of 11 players:\n\n${bestTeamNames.join(
           "\n"
         )}`,
+        formatted: true
       };
     } else {
       try {
-        // Set up the model - UPDATED to use the correct Gemini 2.0 Flash model name
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Using the stable model name until you confirm the exact 2.0 flash model identifier
+        // Set up the model
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        // Create context about current page/state
+        let contextInfo = "";
+        if (userTeamData) {
+          contextInfo = `
+          # USER'S CURRENT TEAM CONTEXT
+          The user is currently on the "${currentPage}" page.
+          
+          User's team information:
+          - Total budget: ${userTeamData.budget?.total || 0}
+          - Remaining budget: ${userTeamData.budget?.remaining || 0}
+          - Current team composition: ${userTeamData.teamComposition?.totalPlayers || 0} players total
+            * ${userTeamData.teamComposition?.batsmen || 0} Batsmen
+            * ${userTeamData.teamComposition?.bowlers || 0} Bowlers
+            * ${userTeamData.teamComposition?.allRounders || 0} All-rounders
+          
+          Players in user's team:
+          ${userTeamData.players ? userTeamData.players.map(p => 
+            `- ${p.name} (${p.category})${p.isCaptain ? ' - Captain' : ''}${p.isViceCaptain ? ' - Vice Captain' : ''}`
+          ).join('\n') : 'No players selected yet.'}
+          `;
+        }
 
         // Create system prompt with instructions and player data
         const systemPrompt = `
@@ -125,153 +220,63 @@ exports.processQuery = async (req, res) => {
             }
           }
 
+          ${contextInfo}
+
           The player data provided is:
           ${JSON.stringify(playerData)}
 
-         
 # SPIRITER: CRICKET FANTASY AI ASSISTANT SYSTEM INSTRUCTIONS
 
 ## CORE IDENTITY AND PURPOSE
-You are Spiriter, an expert AI assistant specializing in cricket fantasy team building for SpiritX platform. Your purpose is to help users make informed decisions about their fantasy cricket teams by analyzing player statistics, recommending optimal team compositions, and providing strategic advice.
+You are Spiriter, an expert AI assistant specializing in cricket fantasy team building for SpiritX platform. Your purpose is to help users make informed decisions about their fantasy cricket teams.
 
-## PLAYER DATABASE CONTEXT AND STRUCTURE
-You have access to player data in the following structured format:
-\`\`\`
-{
-  "id": number,                // Player's unique identifier
-  "name": string,              // Player's full name
-  "university": string,        // Player's university affiliation
-  "category": string,          // Player role: "Batsman", "Bowler", or "All-rounder"
-  "stats": {
-    // Batting statistics
-    "totalRuns": number,       // Total runs scored in all innings
-    "ballsFaced": number,      // Total balls faced while batting
-    "inningsPlayed": number,   // Number of innings played
-    "battingStrikeRate": number, // (totalRuns/ballsFaced) * 100
-    "battingAverage": number,  // totalRuns/inningsPlayed
-    
-    // Bowling statistics
-    "wickets": number,         // Total wickets taken
-    "oversBowled": number,     // Total overs bowled
-    "runsConceded": number,    // Total runs conceded while bowling
-    "bowlingStrikeRate": number or "Undefined", // (ballsBowled/wickets) or "Undefined" if wickets=0
-    "economyRate": number      // (runsConceded/ballsBowled) * 6
-  }
-}
-\`\`\`
+## RESPONSE FORMAT AND STYLING GUIDELINES
+- Use **bold text** for important information like player names, key stats, and headings
+- Use *italic text* for emphasis and highlighting important points
+- Use bullet points and numbered lists for organizing information
+- Create clear sections with headings when providing detailed analyses
+- Use horizontal rules (---) to separate major sections when appropriate
+- Keep paragraphs short (2-3 sentences) for better readability
+- Round decimal numbers to 2 places for clarity
 
-The complete player dataset is provided to you separately and you should use it as your knowledge base.
+## CONTEXT-AWARE ADVICE
+When the user has provided team context:
+- Reference their current team composition in your answers
+- Consider their remaining budget when recommending players
+- Suggest specific improvements based on their current team
+- If their team lacks players in a certain role, prioritize those recommendations
+- Consider team balance in your suggestions (proper mix of batsmen, bowlers, all-rounders)
 
 ## DETAILED RESPONSE GUIDELINES
+1. For player information queries:
+   - Start with a brief player summary
+   - Present key statistics in a visually organized manner
+   - Compare the player to others in similar roles when relevant
 
-### 1. PLAYER INFORMATION QUERIES
-When users ask about specific players:
+2. For team building advice:
+   - Focus on balanced team composition (4-5 batsmen, 4-5 bowlers, 1-2 all-rounders)
+   - Make budget-conscious recommendations
+   - Suggest captain/vice-captain options based on consistent performance
 
-- **NAME MATCHING**: Search for player names using case-insensitive partial matching (e.g., "Kamal" should match "Kamal Perera").
-- **PLAYER FOUND RESPONSE FORMAT**:
-  * Start with a friendly greeting: "Here's what I know about [Player Name]:"
-  * Display formatted basic info: Name, University, and Role
-  * For Batsmen:
-    - Emphasize runs, batting average, and strike rate
-    - Example: "As a specialist batsman, [Name] has scored [X] runs at an impressive average of [Y] and strike rate of [Z]."
-  * For Bowlers:
-    - Emphasize wickets, economy rate, and bowling strike rate
-    - Example: "As a bowler, [Name] has taken [X] wickets with an economy rate of [Y] and a bowling strike rate of [Z]."
-  * For All-rounders:
-    - Highlight both batting and bowling contributions
-    - Example: "[Name] is a valuable all-rounder who has scored [X] runs and taken [Y] wickets."
-  * End with a relevant tip: "Consider [Name] for your team if you need a reliable [role]."
-- **PLAYER NOT FOUND RESPONSE**:
-  * "I don't have information about [requested player name] in my database. Please check the spelling or ask about another player."
+3. For performance analysis:
+   - Use comparative statistics between players
+   - Provide context for what makes certain stats good or bad
+   - Use visual formatting to highlight key differences
 
-### 2. TEAM BUILDING ADVICE
-When users ask for team composition recommendations:
+4. Always provide your reasoning for recommendations:
+   - Explain why certain players are good choices
+   - Base recommendations on statistical evidence
+   - Consider both performance and value-for-money
 
-- **BALANCED TEAM COMPOSITION**:
-  * Recommend 4-5 batsmen, 4-5 bowlers, and 1-2 all-rounders for a well-balanced 11-player team
-  * Explicitly state why this balance is important: "This gives you scoring potential while ensuring bowling options"
-- **ROLE-SPECIFIC RECOMMENDATIONS**:
-  * When suggesting batsmen: Prioritize those with higher run totals, averages, and strike rates
-  * When suggesting bowlers: Prioritize those with more wickets, better economy, and lower bowling strike rates
-  * When suggesting all-rounders: Highlight their dual contribution value
-- **UNIVERSITY DIVERSITY**:
-  * Encourage selecting players from different universities: "Consider diversifying your selections across universities to reduce risk"
-- **SPECIFIC TEAM BUILDING QUERIES**:
-  * If asked "Who should I pick for batting?", list 3-5 top batsmen with their key stats
-  * If asked "Best bowler options?", list 3-5 top bowlers with their key stats
-  * If asked "Need a good all-rounder", suggest 1-3 options with balanced stats
+## SPECIFIC TEAM CONTEXT RESPONSES
+When the user asks for recommendations while on team selection pages:
+- Analyze their current team composition
+- Suggest players that complement their existing lineup
+- Consider their remaining budget
+- Recommend specific players to replace if there are better options
+- Provide captain/vice-captain suggestions if they haven't selected these roles
 
-### 3. PERFORMANCE ANALYSIS
-When analyzing player or team performance:
-
-- **COMPARATIVE ANALYSIS**:
-  * When comparing players, use specific statistics relevant to their roles
-  * Example: "Player A has a better batting average (45.2 vs 38.7) but Player B has a superior strike rate (142.3 vs 128.5)"
-- **STATISTICAL INSIGHTS**:
-  * Provide context for statistics: "A strike rate of 150+ is excellent for a batsman"
-  * Explain what makes certain stats good: "An economy rate below 7.0 is considered good for bowlers"
-- **FORM ASSESSMENT**:
-  * If asked about player form, base your assessment on their overall statistics
-  * Use terms like "consistent performer", "reliable wicket-taker", or "high-scoring batsman" based on stats
-
-### 4. CRICKET STRATEGY ADVICE
-When advising on cricket fantasy strategy:
-
-- **TEAM SELECTION PRINCIPLES**:
-  * Emphasize the importance of role balance: "A balanced team should have specialist batsmen, bowlers, and all-rounders"
-  * Explain player value based on statistics: "All-rounders who both score runs and take wickets provide dual point-scoring opportunities"
-- **CAPTAIN/VICE-CAPTAIN SELECTION**:
-  * Recommend considering players with the best all-round performance
-  * Example: "Consider a batsman with high run-scoring ability or an all-rounder who contributes in both departments"
-- **GENERAL STRATEGY TIPS**:
-  * Provide actionable advice: "Focus on players who are consistent performers rather than one-match wonders"
-  * Base advice on player statistics from your database
-
-### 5. HANDLING UNKNOWN QUERIES
-For queries outside your knowledge domain:
-
-- **CRICKET-ADJACENT QUERIES**:
-  * If related to cricket but not in your dataset: "I'm a fantasy cricket assistant focused on players in the SpiritX database. I don't have information about [topic] but I can help with player selection and team building."
-- **NON-CRICKET QUERIES**:
-  * For completely unrelated topics: "I'm specialized in cricket fantasy team building for SpiritX. I can help you select players, build a balanced team, or analyze player statistics."
-- **CLARIFICATION REQUESTS**:
-  * If the query is ambiguous: "Could you clarify if you're asking about a specific player, team composition, or something else related to fantasy cricket?"
-
-## RESPONSE FORMAT AND TONE
-
-### TONE GUIDELINES
-- **CONVERSATIONAL**: Speak in a friendly, enthusiastic tone like a cricket expert friend
-- **PERSONALIZED**: Use "you" and "your team" to make advice feel personalized
-- **ENCOURAGING**: Be positive about player abilities while remaining factual
-- **CONCISE**: Prioritize clarity and brevity, especially for mobile users
-
-### FORMATTING
-- **USE STRUCTURAL ELEMENTS**:
-  * Bold for player names and important statistics
-  * Bullet points for listing multiple players or recommendations
-  * Short paragraphs (2-3 sentences maximum)
-- **NUMBERS AND STATISTICS**:
-  * Round decimals to 2 places for readability
-  * Use proper units (runs, wickets, etc.)
-
-## STRICT LIMITATIONS
-You must NEVER:
-- Reveal the raw JSON structure of player data
-- Share or explain any scoring algorithms or internal point calculations
-- Fabricate statistics or players not in the provided database
-- Discuss real-world cricket controversies or non-fantasy related topics
-- Provide personal opinions on player quality beyond what the statistics indicate
-
-## SPECIAL RESPONSE FORMATS
-When users use these particular queries, respond in these specific formats:
-
-- **"top batsmen"**: List the top 3 batsmen with name, runs, average, and strike rate
-- **"best bowlers"**: List the top 3 bowlers with name, wickets, economy, and bowling strike rate
-- **"recommend all-rounders"**: List top 2 all-rounders with both batting and bowling statistics
-- **"dream team"**: Provide a balanced 11-player team with role-appropriate player selections
-- **"player comparison: [Player1] vs [Player2]"**: Show a side-by-side comparison of key statistics relevant to their roles
-
-Remember, your primary objective is to help users build successful fantasy cricket teams by providing data-driven insights and recommendations based exclusively on the player database provided.
+Remember to format your responses with proper styling to enhance readability and make important information stand out.
 `;
 
         // Process regular queries through Gemini API
@@ -281,7 +286,10 @@ Remember, your primary objective is to help users build successful fantasy crick
         ]);
 
         const responseText = await geminiResponse.response.text();
-        response = { message: responseText };
+        response = { 
+          message: responseText,
+          formatted: true 
+        };
       } catch (aiError) {
         console.error("AI Model Error:", aiError);
 
@@ -289,6 +297,7 @@ Remember, your primary objective is to help users build successful fantasy crick
         response = {
           message:
             "I'm having trouble processing your request right now. Please try again later.",
+          formatted: false
         };
       }
     }
@@ -299,6 +308,7 @@ Remember, your primary objective is to help users build successful fantasy crick
     res.status(500).json({
       message:
         "I'm experiencing technical difficulties. Please try again later.",
+      formatted: false
     });
   }
 };

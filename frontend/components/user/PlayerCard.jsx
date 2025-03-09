@@ -89,6 +89,12 @@ export default function PlayerCard({ player, showActions = true }) {
               {player.category}
             </span>
           </div>
+          
+          {/* Player Value (Added here) */}
+          <div className="mt-2 flex items-center justify-between">
+            <span className="text-xs text-light-darkest">Value:</span>
+            <span className="text-accent font-semibold text-sm">{formatCurrency(player.value)}</span>
+          </div>
         </div>
 
         {/* Action buttons */}
