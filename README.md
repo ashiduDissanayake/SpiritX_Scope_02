@@ -75,3 +75,9 @@ Make sure your backend WebSocket server is running so that real-time updates are
 
     The backend uses Socket.io to push real-time updates to connected clients.
     The frontend listens for updates and re-renders UI dynamically.
+
+
+Password ans username of admin
+  username-Dasun123
+  password = da$uN123
+  
