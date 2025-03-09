@@ -28,6 +28,11 @@ export default function Header() {
   };
   
   const isActive = (path) => {
+    // Special case for admin dashboard - only active when exactly on "/admin"
+    if (path === '/admin') {
+      return pathname === '/admin';
+    }
+    // For all other paths, keep the original logic
     return pathname === path || pathname.startsWith(`${path}/`);
   };
   
