@@ -8,18 +8,53 @@ import TeamCompletenessIndicator from '@/components/user/TeamCompletenessIndicat
 import Spiriter from '@/components/chatbot/Spiriter';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-
+import { io } from 'socket.io-client';
 export default function MyTeamPage() {
-  const { isAuthenticated, loading: authLoading } = useAuth();
-  const { team, loading: teamLoading } = useTeam();
+  const { isAuthenticated, loading: authLoading, user } = useAuth(); // Added 'user'
+  const { team, loading: teamLoading, loadTeam } = useTeam();
   const router = useRouter();
   
   useEffect(() => {
-    // Redirect if not authenticated
     if (!authLoading && !isAuthenticated) {
-      router.push('/login');
+      router.push("/login");
     }
-  }, [isAuthenticated, authLoading, router]);
+
+    if (!isAuthenticated) return;
+
+    // Initial team load
+    loadTeam();
+
+    // Connect to WebSocket server
+    const socket = io("http://localhost:3001", {
+      cors: {
+        origin: "http://localhost:3000",
+      },
+    });
+
+    socket.on("connect", () => {
+      console.log("Connected to WebSocket server from MyTeamPage");
+      
+    });
+
+    socket.on("connect_error", (error) => {
+      console.error("WebSocket connection error:", error);
+    });
+
+    socket.on("playerUpdated", (updatedPlayer) => {
+      console.log("Player updated:", updatedPlayer);
+      loadTeam();
+    });
+
+    socket.on("playerDeleted", (deletedPlayer) => {
+      console.log("Player deleted:", deletedPlayer);
+      loadTeam();
+    });
+
+    // Cleanup on unmount
+    return () => {
+      socket.disconnect();
+    };
+  }, [isAuthenticated, authLoading, router, loadTeam, user]); // Added 'user' to dependencies
   
   if (authLoading || (teamLoading && isAuthenticated)) {
     return (

@@ -58,6 +58,15 @@ exports.createPlayer = async (req, res) => {
       [name, university, category, total_runs || 0, balls_faced || 0, innings_played || 0,
        wickets || 0, overs_bowled || 0, runs_conceded || 0]
     );
+    // Fetch the newly created player to get full stats
+    const [newPlayers] = await db.execute(
+      'SELECT * FROM players WHERE id = ?',
+      [result.insertId]
+    );
+    const newPlayer = calculations.getPlayerFullStats(newPlayers[0]);
+
+    // Emit WebSocket event for player creation
+    req.io.emit('playerCreated', newPlayer);
     
     res.status(201).json({ 
       message: 'Player created successfully', 
@@ -69,6 +78,7 @@ exports.createPlayer = async (req, res) => {
   }
 };
 
+// Update player (Admin only)
 // Update player (Admin only)
 exports.updatePlayer = async (req, res) => {
   try {
@@ -97,7 +107,20 @@ exports.updatePlayer = async (req, res) => {
        innings_played, wickets, overs_bowled, runs_conceded, playerId]
     );
     
-    res.json({ message: 'Player updated successfully' });
+    // Fetch updated player data
+    const [updatedPlayers] = await db.execute(
+      'SELECT * FROM players WHERE id = ?', 
+      [playerId]
+    );
+    const updatedPlayer = calculations.getPlayerFullStats(updatedPlayers[0]);
+
+    // Emit WebSocket event to all connected clients
+    req.io.emit('playerUpdated', updatedPlayer);
+
+    res.json({ 
+      message: 'Player updated successfully',
+      player: updatedPlayer 
+    });
   } catch (error) {
     console.error('Error updating player:', error);
     res.status(500).json({ message: 'Failed to update player' });
@@ -118,6 +141,8 @@ exports.deletePlayer = async (req, res) => {
     
     // Delete player
     await db.execute('DELETE FROM players WHERE id = ?', [playerId]);
+    // Emit WebSocket event for player deletion
+    req.io.emit('playerDeleted', { id: playerId });
     
     res.json({ message: 'Player deleted successfully' });
   } catch (error) {
