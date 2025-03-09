@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
               <Header />
               
               {/* Main content with proper padding for header */}
-              <main className="flex-grow pt-header px-4 sm:px-6 lg:px-8 w-full" style={{ backgroundColor: '#020611' }}>
+              <main className="flex-grow pt-header w-full" style={{ backgroundColor: '#020611' }}>
                 {children}
               </main>
               
