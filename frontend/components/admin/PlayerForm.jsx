@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { playerService } from '@/lib/api';
+import Avatar from 'react-avatar';
 
 export default function PlayerForm({ playerId = null, onSuccess }) {
   const isEditing = !!playerId;
@@ -15,13 +16,13 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
     innings_played: 0,
     wickets: 0,
     overs_bowled: 0,
-    runs_conceded: 0
+    runs_conceded: 0,
+    photo: ''
   });
   
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   
-  // Load player data if editing
   useEffect(() => {
     if (isEditing) {
       const fetchPlayer = async () => {
@@ -38,11 +39,9 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
     }
   }, [playerId, isEditing]);
   
-  // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     
-    // Convert numeric fields to numbers
     const numericFields = [
       'total_runs', 'balls_faced', 'innings_played',
       'wickets', 'overs_bowled', 'runs_conceded'
@@ -61,7 +60,6 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
     }
   };
   
-  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
@@ -72,7 +70,6 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
         await playerService.updatePlayer(playerId, formData);
       } else {
         await playerService.createPlayer(formData);
-        // Reset form after creation
         setFormData({
           name: '',
           university: '',
@@ -82,11 +79,11 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
           innings_played: 0,
           wickets: 0,
           overs_bowled: 0,
-          runs_conceded: 0
+          runs_conceded: 0,
+          photo: ''
         });
       }
       
-      // Notify parent of success
       if (onSuccess) {
         onSuccess();
       }

@@ -29,3 +29,16 @@
     @apply bg-primary/30;
   }
 }
+
+@keyframes shimmer {
+  from {
+    transform: translateX(-100%) skewX(-12deg);
+  }
+  to {
+    transform: translateX(200%) skewX(-12deg);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2.5s infinite;
+}
