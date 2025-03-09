@@ -1,3 +1,7 @@
+@tailwind utilities;
+
+/* Your custom styles below */
+
 :root {
   --primary-color: #2c62e8;
   --secondary-color: #3ccfcf;
