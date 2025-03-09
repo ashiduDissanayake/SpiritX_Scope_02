@@ -223,7 +223,7 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
                 Total Runs
               </label>
               <input
-                type="number"
+                type="text"
                 id="total_runs"
                 name="total_runs"
                 value={formData.total_runs}
@@ -244,7 +244,7 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
                 Balls Faced
               </label>
               <input
-                type="number"
+                type="text"
                 id="balls_faced"
                 name="balls_faced"
                 value={formData.balls_faced}
@@ -263,7 +263,7 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
                 Innings Played
               </label>
               <input
-                type="number"
+                type="text"
                 id="innings_played"
                 name="innings_played"
                 value={formData.innings_played}
@@ -299,7 +299,7 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
                 Wickets
               </label>
               <input
-                type="number"
+                type="text"
                 id="wickets"
                 name="wickets"
                 value={formData.wickets}
@@ -319,7 +319,7 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
                 Overs Bowled
               </label>
               <input
-                type="number"
+                type="text"
                 id="overs_bowled"
                 name="overs_bowled"
                 value={formData.overs_bowled}
@@ -340,7 +340,7 @@ export default function PlayerForm({ playerId = null, onSuccess }) {
                 Runs Conceded
               </label>
               <input
-                type="number"
+                type="text"
                 id="runs_conceded"
                 name="runs_conceded"
                 value={formData.runs_conceded}
