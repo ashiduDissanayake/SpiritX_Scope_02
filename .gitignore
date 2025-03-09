@@ -1,46 +1,127 @@
-# Here this contains details about the files to be ignored by git
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
-# This file is used to specify files and directories that should be ignored by Git
-# suggest the attributes
+# Testing
+/coverage
+.nyc_output
+*.lcov
+/cypress/videos/
+/cypress/screenshots/
 
-# The following are some common patterns for files and directories to ignore
-# These patterns can be customized according to the specific project needs
+# Next.js
+/.next/
+.next
+/out/
+/build
+next-env.d.ts
+.vercel
+.turbo
 
-# Ignore all log files
+# Production
+/dist
+/build
+/storybook-static
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env.development
+.env.production
+.env.test
+.env.example
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editor directories and files
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*.sublime-project
+*.sublime-workspace
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
 
-# Ignore all temporary files
-*.tmp
+# Typescript specific
+*.tsbuildinfo
 
-# Ignore all backup files
-*.bak
-
-# Ignore all compiled files
+# Compiled output
 *.o
 *.obj
 *.exe
 *.dll
 *.so
 *.dylib
+*.js.map
 
-# Ignore all IDE specific files
-.idea/
-*.sublime-project
-*.sublime-workspace
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+.temp
+.cache
 
-# Ignore all OS generated files
-.DS_Store
-Thumbs.db
-desktop.ini
+# Bundle analysis
+bundle-stats.json
+stats.json
+.webpack/
 
-# Ignore all environment variable files
-.env
-.env.local
-.env.development
-.env.production
-.env.test
-.env.example
+# Optional npm cache directory
+.npm
 
-# Ignore all node_modules directory (Node.js projects)
-node_modules/
-/frontend/.next
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# PWA files
+**/public/sw.js
+**/public/workbox-*.js
+**/public/worker-*.js
+**/public/sw.js.map
+**/public/workbox-*.js.map
+**/public/worker-*.js.map
+
+# Local Netlify folder
+.netlify
+
+# Local dev certs
+*.pem
+
+# CDK/Infrastructure
+.cdk.staging/
+cdk.out/
