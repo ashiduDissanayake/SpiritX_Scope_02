@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { playerService } from "@/lib/api";
 import PlayerCard from "@/components/user/PlayerCard";
 import BudgetTracker from "@/components/user/BudgetTracker";
@@ -21,6 +21,11 @@ export default function SelectTeamPage() {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [playersPerPage] = useState(8);
+  
+  // Scroll state for sticky mini-status
+  const [showMiniStatus, setShowMiniStatus] = useState(false);
+  const statsRef = useRef(null);
+  console.log(team);
 
   useEffect(() => {
     // Redirect if not authenticated
@@ -54,6 +59,20 @@ export default function SelectTeamPage() {
       fetchPlayers();
     }
   }, [isAuthenticated]);
+
+  // Set up scroll event listener for mini-status visibility
+  useEffect(() => {
+    const handleScroll = () => {
+      if (statsRef.current) {
+        const statsPosition = statsRef.current.getBoundingClientRect().bottom;
+        // Show mini-status when original stats are scrolled out of view
+        setShowMiniStatus(statsPosition < 0);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Filter players by category and search term
   const filteredPlayers = players.filter((player) => {
@@ -103,8 +122,41 @@ export default function SelectTeamPage() {
     return null; // Will redirect in useEffect
   }
 
+  // Extract team budget and player count stats for mini-status
+  const remainingBudget = team?.remainingBudget || 0;
+  const playerCount = team?.players?.length || 0;
+  const maxPlayers = 11;
+  const playersNeeded = maxPlayers - playerCount;
+
   return (
     <div className="pt-header bg-dark min-h-screen text-light p-4 md:p-6">
+      {/* Mini Status Bar - Fixed at left, slides in when scrolling past original stats */}
+      <div className={`fixed top-20 left-0 z-20 transform transition-transform duration-300 ${
+        showMiniStatus ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="bg-dark-lighter border border-dark-lightest rounded-r-lg shadow-md p-3 flex flex-col space-y-2">
+          <div className="flex items-center text-primary border-b border-dark-lightest pb-2">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.736 6.979C9.208 6.193 9.696 6 10 6c.304 0 .792.193 1.264.979a1 1 0 001.715-1.029C12.279 4.784 11.232 4 10 4s-2.279.784-2.979 1.95a1 1 0 001.715 1.029zM6 12a2 2 0 114 0 2 2 0 01-4 0zm6 0a2 2 0 114 0 2 2 0 01-4 0z" clipRule="evenodd" />
+            </svg>
+            <div className="flex flex-col">
+              <span className="font-medium">{remainingBudget.toLocaleString()}</span>
+              <span className="text-light-darkest text-xs">Budget</span>
+            </div>
+          </div>
+          
+          <div className="flex items-center text-boundary">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3zM6 8a2 2 0 11-4 0 2 2 0 014 0zM16 18v-3a5.972 5.972 0 00-.75-2.906A3.005 3.005 0 0119 15v3h-3zM4.75 12.094A5.973 5.973 0 004 15v3H1v-3a3 3 0 013.75-2.906z" />
+            </svg>
+            <div className="flex flex-col">
+              <span className="font-medium">{playersNeeded > 0 ? `${playersNeeded} needed` : 'Complete!'}</span>
+              <span className="text-light-darkest text-xs">Players</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
       {/* Page Header with Cricket Ball Decoration */}
       <div className="flex items-center justify-between mb-8 relative">
         <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">Select Your Team</h1>
@@ -116,7 +168,7 @@ export default function SelectTeamPage() {
       
       <div className="mb-8 space-y-6">
         {/* Team Management Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div ref={statsRef} className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <BudgetTracker />
           <TeamCompletenessIndicator />
         </div>
