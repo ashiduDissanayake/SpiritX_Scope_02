@@ -1410,6 +1410,7 @@ video {
   font-size: 1.5rem;
   line-height: 2rem;
 }
+<<<<<<< Updated upstream
 .text-3xl {
   font-size: 1.875rem;
   line-height: 2.25rem;
@@ -1422,10 +1423,14 @@ video {
   font-size: 1.125rem;
   line-height: 1.75rem;
 }
+=======
+
+>>>>>>> Stashed changes
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
+<<<<<<< Updated upstream
 .text-xl {
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -1434,6 +1439,9 @@ video {
   font-size: 0.75rem;
   line-height: 1rem;
 }
+=======
+
+>>>>>>> Stashed changes
 .font-bold {
   font-weight: 700;
 }

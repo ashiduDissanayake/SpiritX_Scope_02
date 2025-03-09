@@ -19,11 +19,19 @@
     "/register/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+<<<<<<< Updated upstream
+=======
+      "static/css/app/register/page.css",
+>>>>>>> Stashed changes
       "static/chunks/app/register/page.js"
     ],
     "/players/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
+<<<<<<< Updated upstream
+=======
+      "static/css/app/players/page.css",
+>>>>>>> Stashed changes
       "static/chunks/app/players/page.js"
     ]
   }

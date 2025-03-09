@@ -18,6 +18,19 @@ eval(__webpack_require__.ts("Promise.resolve(/*! import() eager */).then(__webpa
 
 /***/ }),
 
+<<<<<<< Updated upstream
+=======
+/***/ "(app-pages-browser)/./app/page.module.css":
+/*!*****************************!*\
+  !*** ./app/page.module.css ***!
+  \*****************************/
+/***/ (function(module, __unused_webpack_exports, __webpack_require__) {
+
+eval(__webpack_require__.ts("// extracted by mini-css-extract-plugin\nmodule.exports = {\"header\":\"page_header__oRW75\",\"container\":\"page_container__jZF7q\",\"logo\":\"page_logo__ikIZE\",\"nav\":\"page_nav__ijo23\",\"active\":\"page_active__9fwfh\",\"userMenu\":\"page_userMenu__eOetN\",\"username\":\"page_username__8nRhO\",\"logoutButton\":\"page_logoutButton__vC9VG\",\"menuToggle\":\"page_menuToggle__t6jG5\",\"open\":\"page_open__XXx9B\"};\n    if(true) {\n      // 1741493790098\n      var cssReload = __webpack_require__(/*! ./node_modules/next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement.js */ \"(app-pages-browser)/./node_modules/next/dist/compiled/mini-css-extract-plugin/hmr/hotModuleReplacement.js\")(module.id, {\"publicPath\":\"/_next/\",\"esModule\":false,\"locals\":true});\n      module.hot.dispose(cssReload);\n      \n    }\n  \nmodule.exports.__checksum = \"354f7a825a2b\"\n//# sourceURL=[module]\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiKGFwcC1wYWdlcy1icm93c2VyKS8uL2FwcC9wYWdlLm1vZHVsZS5jc3MiLCJtYXBwaW5ncyI6IkFBQUE7QUFDQSxrQkFBa0I7QUFDbEIsT0FBTyxJQUFVO0FBQ2pCO0FBQ0Esc0JBQXNCLG1CQUFPLENBQUMsd01BQTRJLGNBQWMsc0RBQXNEO0FBQzlPLE1BQU0sVUFBVTtBQUNoQjtBQUNBO0FBQ0E7QUFDQSx5QkFBeUIiLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly9fTl9FLy4vYXBwL3BhZ2UubW9kdWxlLmNzcz9iNTcxIl0sInNvdXJjZXNDb250ZW50IjpbIi8vIGV4dHJhY3RlZCBieSBtaW5pLWNzcy1leHRyYWN0LXBsdWdpblxubW9kdWxlLmV4cG9ydHMgPSB7XCJoZWFkZXJcIjpcInBhZ2VfaGVhZGVyX19vUlc3NVwiLFwiY29udGFpbmVyXCI6XCJwYWdlX2NvbnRhaW5lcl9falpGN3FcIixcImxvZ29cIjpcInBhZ2VfbG9nb19faWtJWkVcIixcIm5hdlwiOlwicGFnZV9uYXZfX2lqbzIzXCIsXCJhY3RpdmVcIjpcInBhZ2VfYWN0aXZlX185ZndmaFwiLFwidXNlck1lbnVcIjpcInBhZ2VfdXNlck1lbnVfX2VPZXROXCIsXCJ1c2VybmFtZVwiOlwicGFnZV91c2VybmFtZV9fOG5SaE9cIixcImxvZ291dEJ1dHRvblwiOlwicGFnZV9sb2dvdXRCdXR0b25fX3ZDOVZHXCIsXCJtZW51VG9nZ2xlXCI6XCJwYWdlX21lbnVUb2dnbGVfX3Q2akc1XCIsXCJvcGVuXCI6XCJwYWdlX29wZW5fX1hYeDlCXCJ9O1xuICAgIGlmKG1vZHVsZS5ob3QpIHtcbiAgICAgIC8vIDE3NDE0OTM3OTAwOThcbiAgICAgIHZhciBjc3NSZWxvYWQgPSByZXF1aXJlKFwiL1VzZXJzL2FzaGlkdWRpc3NhbmF5YWtlL0Rldi9TcGlyaXRYX1Njb3BlXzAyL2Zyb250ZW5kL25vZGVfbW9kdWxlcy9uZXh0L2Rpc3QvY29tcGlsZWQvbWluaS1jc3MtZXh0cmFjdC1wbHVnaW4vaG1yL2hvdE1vZHVsZVJlcGxhY2VtZW50LmpzXCIpKG1vZHVsZS5pZCwge1wicHVibGljUGF0aFwiOlwiL19uZXh0L1wiLFwiZXNNb2R1bGVcIjpmYWxzZSxcImxvY2Fsc1wiOnRydWV9KTtcbiAgICAgIG1vZHVsZS5ob3QuZGlzcG9zZShjc3NSZWxvYWQpO1xuICAgICAgXG4gICAgfVxuICBcbm1vZHVsZS5leHBvcnRzLl9fY2hlY2tzdW0gPSBcIjM1NGY3YTgyNWEyYlwiXG4iXSwibmFtZXMiOltdLCJzb3VyY2VSb290IjoiIn0=\n//# sourceURL=webpack-internal:///(app-pages-browser)/./app/page.module.css\n"));
+
+/***/ }),
+
+>>>>>>> Stashed changes
 /***/ "(app-pages-browser)/./app/page.js":
 /*!*********************!*\
   !*** ./app/page.js ***!
