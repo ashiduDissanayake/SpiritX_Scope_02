@@ -1,5 +1,13 @@
 'use client';
 
+
+import { useEffect } from 'react';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
+import TournamentStats from '@/components/admin/TournamentStats';
+
+
 import { useState, useEffect } from 'react';
 import { statsService } from '@/lib/api';
 import { Trophy, TrendingUp, BarChart2, Award } from 'lucide-react';
@@ -32,6 +40,7 @@ export default function TournamentStats() {
     fetchStats();
   }, []);
   
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center p-6 min-h-[240px] bg-black/30 backdrop-blur-lg rounded-xl border border-purple-500/20">
@@ -43,6 +52,10 @@ export default function TournamentStats() {
         <span className="mt-4 text-cyan-400 text-lg font-bold tracking-wide">Loading statistics<span className="animate-pulse">...</span></span>
       </div>
     );
+
+  if (loading || !isAuthenticated) {
+    return <div className="flex items-center justify-center h-screen bg-gray-900 text-cyan-400">Loading...</div>;
+
   }
   
   if (error) {
@@ -57,6 +70,7 @@ export default function TournamentStats() {
   }
   
   return (
+
     <div className="max-w-5xl mx-auto relative p-6 bg-black/40 backdrop-blur-lg rounded-xl border border-purple-500/20 shadow-[0_0_25px_rgba(168,85,247,0.15)]">
       {/* Background neon effect */}
       <div className="absolute -top-10 -right-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl"></div>
@@ -184,6 +198,27 @@ export default function TournamentStats() {
             Cricket Tournament 2025
           </span>
         </p>
+
+    <div className="min-h-screen bg-gray-900 text-gray-200 p-6">
+      <div className="mb-8 flex items-center justify-between">
+        <Link href="/admin" className="flex items-center bg-gray-800 hover:bg-gray-700 transition-colors text-cyan-400 py-2 px-4 rounded-lg shadow-md border border-cyan-700">
+          <span>&larr;</span>
+          <span className="ml-2">Back to Dashboard</span>
+        </Link>
+      </div>
+      
+      <div className="flex flex-col">
+        <h1 className="text-4xl font-bold text-cyan-400 mb-6 ml-2 border-l-4 border-cyan-500 pl-4">
+          Tournament Summary
+        </h1>
+        
+        <div className="bg-gray-800 rounded-xl shadow-xl p-6 border border-gray-700 relative overflow-hidden">
+          {/* Neon accent line on top */}
+          <div className="absolute top-0 left-0 right-0 h-1 bg-cyan-500 shadow-lg shadow-cyan-500/50"></div>
+          
+          <TournamentStats />
+        </div>
+
       </div>
     </div>
   );
