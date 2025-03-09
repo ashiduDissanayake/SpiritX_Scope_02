@@ -32,6 +32,7 @@ export default function PlayersPage() {
         const playersWithStats = await Promise.all(
           data.map(async player => {
             const details = await playerService.getPlayerById(player.id);
+            
             return details;
           })
         );

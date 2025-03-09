@@ -35,6 +35,7 @@ export default function SelectTeamPage() {
         const playersWithStats = await Promise.all(
           data.map(async (player) => {
             const details = await playerService.getPlayerById(player.id);
+            console.log(details);
             return details;
           })
         );
@@ -73,7 +74,7 @@ export default function SelectTeamPage() {
   return (
     <div className={styles.selectTeamPage}>
       <h1>Select Your Team</h1>
-
+       
       <div className={styles.teamManagement}>
         <div className={styles.statsContainer}>
           <BudgetTracker />

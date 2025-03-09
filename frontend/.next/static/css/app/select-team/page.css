@@ -495,4 +495,13 @@
 /*!***************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[7].use[3]!./app/select-team/page.module.css ***!
   \***************************************************************************************************************************************************************************************************************************************************************************/
+.page_statsContainer__69JBA {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 60px; /* Adjust this value to match your navbar height */
+  background: white; /* Match your theme */
+  z-index: 1000; /* Keep it above other content */
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 

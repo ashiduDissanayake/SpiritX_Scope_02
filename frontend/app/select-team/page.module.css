@@ -1,0 +1,8 @@
+.statsContainer {
+  position: sticky;
+  top: 60px; /* Adjust this value to match your navbar height */
+  background: white; /* Match your theme */
+  z-index: 1000; /* Keep it above other content */
+  padding: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
