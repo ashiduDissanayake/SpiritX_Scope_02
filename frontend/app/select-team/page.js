@@ -8,7 +8,6 @@ import Spiriter from "@/components/chatbot/Spiriter";
 import { useAuth } from "@/context/AuthContext";
 import { useTeam } from "@/context/TeamContext";
 import { useRouter } from "next/navigation";
-import styles from "./page.module.css";
 
 export default function SelectTeamPage() {
   const [players, setPlayers] = useState([]);
@@ -18,6 +17,10 @@ export default function SelectTeamPage() {
   const { isAuthenticated, loading: authLoading } = useAuth();
   const { team } = useTeam();
   const router = useRouter();
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const [playersPerPage] = useState(8);
 
   useEffect(() => {
     // Redirect if not authenticated
@@ -61,9 +64,39 @@ export default function SelectTeamPage() {
       player.university.toLowerCase().includes(searchTerm.toLowerCase());
     return categoryMatch && searchMatch;
   });
+  
+  // Get current page players
+  const indexOfLastPlayer = currentPage * playersPerPage;
+  const indexOfFirstPlayer = indexOfLastPlayer - playersPerPage;
+  const currentPlayers = filteredPlayers.slice(indexOfFirstPlayer, indexOfLastPlayer);
+  
+  // Calculate total pages
+  const totalPages = Math.ceil(filteredPlayers.length / playersPerPage);
+  
+  // Change page
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
+  // Load more players
+  const loadMore = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+  
+  // Reset pagination when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [selectedCategory, searchTerm]);
 
   if (authLoading || (loading && isAuthenticated)) {
-    return <div className={styles.loading}>Loading players...</div>;
+    return (
+      <div className="pt-header min-h-screen flex flex-col items-center justify-center bg-dark text-light p-6">
+        <div className="relative w-16 h-16">
+          <div className="absolute top-0 left-0 w-full h-full border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+        </div>
+        <p className="mt-4 text-light text-lg font-medium">Loading players...</p>
+      </div>
+    );
   }
 
   if (!isAuthenticated) {
@@ -71,72 +104,192 @@ export default function SelectTeamPage() {
   }
 
   return (
-    <div className={styles.selectTeamPage}>
-      <h1>Select Your Team</h1>
-
-      <div className={styles.teamManagement}>
-        <div className={styles.statsContainer}>
+    <div className="pt-header bg-dark min-h-screen text-light p-4 md:p-6">
+      {/* Page Header with Cricket Ball Decoration */}
+      <div className="flex items-center justify-between mb-8 relative">
+        <h1 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">Select Your Team</h1>
+        <div className="hidden md:block absolute -top-2 right-4 w-10 h-10">
+          <div className="absolute inset-0 rounded-full bg-boundary/20 animate-ping opacity-75"></div>
+          <div className="absolute inset-0 rounded-full bg-boundary/40 border border-boundary/20"></div>
+        </div>
+      </div>
+      
+      <div className="mb-8 space-y-6">
+        {/* Team Management Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <BudgetTracker />
           <TeamCompletenessIndicator />
         </div>
-
-        <div className={styles.filters}>
-          <div className={styles.searchBar}>
+        
+        {/* Filters Section */}
+        <div className="space-y-4">
+          {/* Search Bar */}
+          <div className="relative">
             <input
               type="text"
-              placeholder="Search players..."
+              placeholder="Search players or universities..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full px-4 py-3 bg-dark-lighter border border-dark-lightest rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/60 text-light placeholder-light-darkest"
             />
+            <svg xmlns="http://www.w3.org/2000/svg" className="absolute right-3 top-3.5 h-5 w-5 text-light-darkest" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
           </div>
-
-          <div className={styles.categoryFilter}>
-            <button
-              className={selectedCategory === "All" ? styles.activeFilter : ""}
-              onClick={() => setSelectedCategory("All")}
+          
+          {/* Category Filter */}
+          <div className="flex flex-wrap gap-2">
+            <button 
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
+                selectedCategory === 'All' 
+                  ? 'bg-primary/10 border-primary text-primary' 
+                  : 'border-dark-lightest text-light-darker hover:border-primary/50 hover:text-light'
+              }`}
+              onClick={() => setSelectedCategory('All')}
             >
               All
             </button>
-            <button
-              className={
-                selectedCategory === "Batsman" ? styles.activeFilter : ""
-              }
-              onClick={() => setSelectedCategory("Batsman")}
+            <button 
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
+                selectedCategory === 'Batsman' 
+                  ? 'bg-primary/10 border-primary text-primary' 
+                  : 'border-dark-lightest text-light-darker hover:border-primary/50 hover:text-light'
+              }`}
+              onClick={() => setSelectedCategory('Batsman')}
             >
               Batsmen
             </button>
-            <button
-              className={
-                selectedCategory === "Bowler" ? styles.activeFilter : ""
-              }
-              onClick={() => setSelectedCategory("Bowler")}
+            <button 
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
+                selectedCategory === 'Bowler' 
+                  ? 'bg-primary/10 border-primary text-primary' 
+                  : 'border-dark-lightest text-light-darker hover:border-primary/50 hover:text-light'
+              }`}
+              onClick={() => setSelectedCategory('Bowler')}
             >
               Bowlers
             </button>
-            <button
-              className={
-                selectedCategory === "All-Rounder" ? styles.activeFilter : ""
-              }
-              onClick={() => setSelectedCategory("All-Rounder")}
+            <button 
+              className={`px-4 py-2 rounded-lg border transition-all duration-200 ${
+                selectedCategory === 'All-Rounder' 
+                  ? 'bg-primary/10 border-primary text-primary' 
+                  : 'border-dark-lightest text-light-darker hover:border-primary/50 hover:text-light'
+              }`}
+              onClick={() => setSelectedCategory('All-Rounder')}
             >
               All-Rounders
             </button>
           </div>
-        </div>
-
-        <div className={styles.playersList}>
-          {filteredPlayers.length > 0 ? (
-            filteredPlayers.map((player) => (
-              <PlayerCard key={player.id} player={player} />
-            ))
-          ) : (
-            <div className={styles.noPlayers}>
-              No players found matching your filters.
-            </div>
-          )}
+          
+          {/* Stats Indicator */}
+          <div className="flex justify-between items-center text-sm text-light-darkest px-1">
+            <span>Total Players: {filteredPlayers.length}</span>
+            <span>Showing: {Math.min(currentPage * playersPerPage, filteredPlayers.length)} of {filteredPlayers.length}</span>
+          </div>
         </div>
       </div>
-
+      
+      {/* Players Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+        {currentPlayers.length > 0 ? (
+          currentPlayers.map((player) => (
+            <PlayerCard key={player.id} player={player} />
+          ))
+        ) : (
+          <div className="col-span-full py-16 flex flex-col items-center justify-center text-center bg-dark-lighter border border-dashed border-dark-lightest rounded-2xl">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-light-darkest mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19.071 13.07l-1.414-1.414M10 18a8 8 0 110-16 8 8 0 010 16zm0 0v4m0-17V1" />
+            </svg>
+            <p className="text-xl text-light mb-2">No players found</p>
+            <p className="text-light-darkest max-w-md">We couldn't find any players matching your current filters. Try adjusting your search or category selection.</p>
+            <button 
+              onClick={() => {
+                setSelectedCategory('All');
+                setSearchTerm('');
+              }}
+              className="mt-4 px-4 py-2 bg-dark-lightest hover:bg-primary/10 text-light-darker hover:text-primary transition-colors rounded-lg"
+            >
+              Clear all filters
+            </button>
+          </div>
+        )}
+      </div>
+      
+      {/* Pagination / Load More */}
+      {filteredPlayers.length > playersPerPage && (
+        <div className="mt-8 flex flex-col items-center space-y-4">          
+          {/* Pagination navigation (desktop) */}
+          <div className="hidden md:flex space-x-1">
+            {/* Previous button */}
+            <button
+              onClick={() => currentPage > 1 && paginate(currentPage - 1)}
+              disabled={currentPage === 1}
+              className="px-3 py-1 rounded border border-dark-lightest disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
+            
+            {/* Page numbers */}
+            {[...Array(totalPages)].map((_, index) => {
+              // Show pages: first, last, current, and one before/after current
+              const pageNum = index + 1;
+              if (
+                pageNum === 1 ||
+                pageNum === totalPages ||
+                pageNum === currentPage ||
+                pageNum === currentPage - 1 ||
+                pageNum === currentPage + 1
+              ) {
+                return (
+                  <button
+                    key={pageNum}
+                    onClick={() => paginate(pageNum)}
+                    className={`w-8 h-8 rounded ${
+                      currentPage === pageNum
+                        ? 'bg-primary text-light'
+                        : 'border border-dark-lightest hover:bg-dark-lightest'
+                    }`}
+                  >
+                    {pageNum}
+                  </button>
+                );
+              }
+              // Show ellipsis for skipped pages
+              if (
+                (pageNum === 2 && currentPage > 3) ||
+                (pageNum === totalPages - 1 && currentPage < totalPages - 2)
+              ) {
+                return <span key={pageNum} className="px-2">...</span>;
+              }
+              return null;
+            })}
+            
+            {/* Next button */}
+            <button
+              onClick={() => currentPage < totalPages && paginate(currentPage + 1)}
+              disabled={currentPage === totalPages}
+              className="px-3 py-1 rounded border border-dark-lightest disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd" />
+              </svg>
+            </button>
+          </div>
+          
+          {/* Current page indicator */}
+          <p className="text-sm text-light-darker">
+            Page {currentPage} of {totalPages}
+          </p>
+        </div>
+      )}
+      
+      {/* Cricket Pitch Decoration */}
+      <div className="w-full flex justify-center my-8">
+        <div className="h-1 w-48 bg-gradient-to-r from-transparent via-pitch to-transparent rounded-full opacity-30"></div>
+      </div>
+      
       <Spiriter />
     </div>
   );
