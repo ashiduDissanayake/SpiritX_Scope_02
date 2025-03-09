@@ -20,6 +20,10 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+      "static/css/app/register/page.css",
+>>>>>>> Stashed changes
 =======
       "static/css/app/register/page.css",
 >>>>>>> Stashed changes
@@ -29,6 +33,10 @@
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
+=======
+      "static/css/app/players/page.css",
+>>>>>>> Stashed changes
 =======
       "static/css/app/players/page.css",
 >>>>>>> Stashed changes
