@@ -1,0 +1,126 @@
+# Xcelerate SpiritX 2025 Hackathon Tasks
+# Date: March 08, 2025
+# Document: Magments Handbook - Inter University Development Competition Stage 1
+
+---
+
+## Project 1: SecureConnect (Total: 250 Points)
+### Description: Build a secure signup and login system with validation, error handling, and a polished user experience.
+### Requirements: Fully integrated frontend, backend, and database system.
+
+### Signup Page Tasks (Total: 110 Points)
+#### Easy (30 Points)
+- Create three input fields: Username, Password, Confirm Password (10 pts)
+- Display errors under each input field if validation fails (10 pts)
+- Prevent signup if any field is empty (10 pts)
+
+#### Medium (50 Points)
+- Ensure Username is at least 8 characters long and unique (10 pts)
+- Enforce Password rules: at least one lowercase letter, one uppercase letter, one special character (15 pts)
+- Confirm Password must match Password before proceeding (15 pts)
+- Implement real-time validation (display errors as the user types) (10 pts)
+
+#### Hard (30 Points)
+- Display authentication-related errors above the CTA button (10 pts)
+- Show a confirmation dialog after successful signup and redirect to login page after 2 seconds (10 pts)
+- Implement a password strength indicator that updates dynamically based on complexity (10 pts)
+
+### Login Page Tasks (Total: 140 Points)
+#### Easy (30 Points)
+- Create two input fields: Username, Password (10 pts)
+- Display errors under each field if validation fails (10 pts)
+- Prevent login if fields are empty (10 pts)
+
+#### Medium (60 Points)
+- Implement same error handling and validation as Signup Page (20 pts)
+- Prevent login if username doesn’t exist or password is incorrect (20 pts)
+- Implement real-time validation (display errors as the user types) (20 pts)
+
+#### Hard (60 Points)
+- Navigate to a landing page after successful login with:
+  - Display message: "Hello, <username>" (10 pts)
+  - Add basic session management to keep user logged in until "Logout" button is clicked, then redirect to login page (30 pts)
+
+---
+
+## Project 2: Spirit11 (Total: 750 Points)
+### Description: Build a fantasy cricket league platform with admin panel, user interface, and AI chatbot (Spiriter).
+### Requirements: Working frontend, backend, and database. Use provided dataset for players. CRUD operations only for new players.
+
+### Admin Panel Tasks (Total: 195 Points)
+#### Easy (60 Points)
+- Create "Players" View to display all players (10 pts)
+- Create "Player Stats" View for detailed player statistics (20 pts)
+- Create "Tournament Summary" View showing:
+  - Overall runs (total runs by all players) (7.5 pts)
+  - Overall wickets (total wickets by all players) (7.5 pts)
+  - Highest run scorer (7.5 pts)
+  - Highest wicket taker (7.5 pts)
+
+#### Medium (85 Points)
+- Implement CRUD operations for players in "Players" View (update on details and stats) (25 pts)
+- Ensure "Player Stats" Tab is formatted and readable (clickable player details, stats, value, points) (30 pts)
+- Dynamically calculate Points and Value using provided logic (30 pts)
+- Implement Admin-Only Authentication (10 pts)
+
+#### Hard (50 Points)
+- Implement real-time updates without refresh for player stats and details (50 pts)
+
+### User Interface Tasks (Total: 360 Points)
+#### Easy (180 Points)
+- Implement User Authentication (signup/login with username/password, load team details on login) (50 pts)
+- Create "Players" Tab to view all available players (no selection) (30 pts)
+- Show Detailed Profile and stats (no points) when a player is clicked in "Players" Tab (30 pts)
+- Create "Select Your Team" Tab:
+  - List players by category (name, university, budget only) (35 pts)
+  - Prevent adding duplicate players unless removed (35 pts)
+- Create "Team" Tab:
+  - Show selected players (35 pts)
+  - Display total points only when 11 players are selected (use logic for calculation) (35 pts)
+  - Allow removing players (35 pts)
+
+#### Medium (120 Points)
+- Restrict "Players" Tab to view-only (no selection) (30 pts)
+- Create "Budget" View:
+  - Track leftover budget and spent amount per player (initial budget: Rs.9,000,000) (30 pts)
+  - Add player value back to budget when removed (30 pts)
+- Display team completeness status (e.g., "7/11 players selected") (30 pts)
+- Create "Leaderboard" showing username & points (descending order, highlight logged-in user) (30 pts)
+
+#### Hard (60 Points)
+- Implement real-time updates without refresh for player stats, details, and team changes (30 pts)
+- Implement fully responsive UI for all user-facing pages (30 pts)
+
+### AI Chatbot (Spiriter) Tasks (Total: 195 Points)
+#### Medium (80 Points)
+- Implement chatbot in UI (via "Spiriter" button):
+  - Respond to queries about player personal details and stats (80 pts)
+
+#### Hard (115 Points)
+- Suggest best possible team of 11 players (highest points, no hardcoding) (30 pts)
+- Answer queries about any player’s stats (30 pts)
+- Reply "I don’t have enough knowledge to answer that question" for unavailable details (25 pts)
+- Never reveal player points (30 pts)
+
+### Logic for Calculations
+- Player Points = ((Batting Strike Rate / 5) + (Batting Average × 0.8)) + ((500 / Bowling Strike Rate) + (140 / Economy Rate))
+- Batting Strike Rate = (Total Runs / Total Balls Faced) × 100
+- Batting Average = Total Runs / Innings Played
+- Bowling Strike Rate = Total Balls Bowled / Total Wickets Taken
+- Economy Rate = (Total Runs Conceded / Total Balls Bowled) × 6
+- Player Value (Rs.) = (9 × Points + 100) × 1000 (round to nearest 50,000)
+
+### Special Notes
+- Input all players from provided dataset (Google Drive link).
+- Test CRUD with new players only (dataset unchanged).
+- Create user account:
+  - Username: spiritx_2025
+  - Password: SpiritX@2025
+  - Team: Danushka Kumara, Jeewan Thirimanne, Charith Shanaka, Pathum Dhananyaya, Suranga Bandara, Sammu Sandakan, Minod Bathnayake, Lakshan Gunathilaka, Sadeera Rajapaksa, Danushka Jayawickrama, Lakshan Vandersay
+
+---
+
+## General Guidelines
+- 36-hour hackathon: March 08, 2025.
+- Prioritize tasks: Easy → Medium → Hard.
+- Manage time, focus on quality, collaborate, and have fun!
