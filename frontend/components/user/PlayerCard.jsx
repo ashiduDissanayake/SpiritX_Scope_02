@@ -56,7 +56,9 @@ export default function PlayerCard({ player, showActions = true }) {
 
       {/* Player header */}
       <div 
-        onClick={() => setShowDetails(!showDetails)}
+        onClick={() => {
+          console.log("Card clicked!", player.name);
+          setShowDetails(!showDetails)}}
         className="p-4 cursor-pointer flex flex-col gap-1"
       >
         <h3 className="text-light font-bold text-lg">{player.name}</h3>
